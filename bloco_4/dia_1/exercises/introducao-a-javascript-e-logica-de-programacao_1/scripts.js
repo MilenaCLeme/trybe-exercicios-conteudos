@@ -161,3 +161,40 @@ for(let index = 1; index < totalDeProdutos; index += 1){
 }
 
 //Exercicio 11
+
+// Desconto do salario Bruto de INSS E IR 
+let salarioBruto = 3000.00
+let impostoINSS = 0;
+let impostoIR = 0;
+let SalarioDesconto = 0;
+
+if(salarioBruto <= 1556.94 && salarioBruto >= 0){
+    impostoINSS = salarioBruto * 0.08;
+    SalarioDesconto = salarioBruto - impostoINSS
+} else if(salarioBruto >= 1556.95 && salarioBruto <= 2594.92) {
+    impostoINSS = salarioBruto * 0.09; 
+    SalarioDesconto = salarioBruto - impostoINSS 
+} else if(salarioBruto >= 2594.93 && salarioBruto <= 5189.82) {
+    impostoINSS = salarioBruto * 0.11;
+    SalarioDesconto = salarioBruto - impostoINSS 
+} else {
+    impostoINSS = 570.88;
+    SalarioDesconto = salarioBruto - impostoINSS 
+}
+
+console.log(SalarioDesconto);
+
+if(salarioBruto >= 1903.99 && salarioBruto <= 2826.65) {
+    impostoIR = (SalarioDesconto * 0.075) - 142.80;
+} else if(salarioBruto >= 2826.66 && salarioBruto <= 3751.05){
+    impostoIR = (SalarioDesconto * 0.15) - 354,80;
+}else if(salarioBruto >= 3751.06 && salarioBruto <= 4664,68){
+    impostoIR = (SalarioDesconto * 0.225) - 636,13;
+} else {
+    impostoIR = (SalarioDesconto * 0.275) - 869.36;
+}
+
+console.log(impostoIR);
+
+let resultado = SalarioDesconto - impostoIR;
+console.log(resultado); 
