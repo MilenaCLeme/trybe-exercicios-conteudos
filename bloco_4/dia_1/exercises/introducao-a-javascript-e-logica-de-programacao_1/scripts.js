@@ -116,3 +116,21 @@ if(nota >= 90 && nota <= 100){
     console.log("Mensagem de erro 001 - Numero invalido");
 }
 
+//Exercicio 8
+
+function numberRandom(){
+    return Math.floor(Math.random() * 60 + 1)
+}
+
+let numberUne = numberRandom();
+let numberTwo = numberRandom();
+let numberThree = numberRandom ();
+console.log(numberUne,numberTwo,numberThree);
+
+if (numberUne % 2 === 0 || numberTwo % 2 === 0 || numberThree % 2 === 0){
+    console.log("Algum numero sortiado é par:" + true);
+} else {
+    console.log("Algum numero sortiado é par:" + false);
+}
+
+//Exercicio 9
