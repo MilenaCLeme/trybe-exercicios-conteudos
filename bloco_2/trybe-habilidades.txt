@@ -1,5 +1,11 @@
+
+- JAVASCRIP
+-COMUNICAÇÃO
+- LOGICA DE PROGRAMAÇÃO
+- EMOCIONAL
 - Unix
 - Bash
 - Git
 - HTML
 - CSS
+
