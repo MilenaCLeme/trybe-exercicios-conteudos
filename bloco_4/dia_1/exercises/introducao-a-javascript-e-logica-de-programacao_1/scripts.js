@@ -73,3 +73,25 @@ if (a + b + c === 180) {
 }
 
 //Exercicio 6
+let peçaDeXadrez = "Rei";
+
+switch(peçaDeXadrez){
+    case "Rei": 
+    console.log(peçaDeXadrez + "-> se movimenta para qualquer direção, uma casa for vezes" );
+    break;
+    case "Rainha":
+    console.log(peçaDeXadrez + "-> se movimenta para qualquer direção, sendo a mais forte");
+    break;
+    case "Bispo":
+    console.log(peçaDeXadrez + "-> se movimenta na diagonals");
+    break;
+    case "Torre":
+    console.log(peçaDeXadrez + "-> se movimenta na horizontal e vertical");
+    break;
+    case "Cavalo":
+    console.log(peçaDeXadrez + "-> se movimenta em formado de L");
+    break;
+    case "Peão":
+    console.log(peçaDeXadrez + "-> se movimenta na horizontal");
+    break;
+}
