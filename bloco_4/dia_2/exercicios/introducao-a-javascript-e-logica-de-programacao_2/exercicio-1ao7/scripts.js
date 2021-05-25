@@ -1,38 +1,47 @@
 
-
-/* Exercicio 1 
+let numbers = [5, 9, 3, 19, 70, 8, 100, 2, 35, 27];
+// Exercicio 1 
 for (let i = 0; i < numbers.length; ++i) {
     console.log(numbers[i]);
 }
-*/
-/* Exercicio 2
-for (let i = 0; i < numbers.length; ++i) {
-    resultado2 = resultado2 + numbers[i]
+
+// Exercicio 2
+let resultadoTwo = 0;
+
+for(let i = 0; i < numbers.length; ++i) {
+    resultadoTwo = resultadoTwo + numbers[i]
 }
 
-console.log(resultado2)
-*/
-/*
+console.log(resultadoTwo);
+
+//Exercicio 3
+let resultadoThree = 0; 
+
 for (let i = 0; i < numbers.length; ++i) {
-    resultado2 = resultado2 + numbers[i]
+    resultadoThree = resultadoThree + numbers[i]
 }
 
-console.log(resultado2 / numbers.length);
+console.log(resultadoThree / numbers.length);
 
-let resultadoFinal = resultado2 / numbers.length;
+//Exercicio 4
+
+let resultadoFinal = resultadoThree / numbers.length;
 
 if (resultadoFinal > 20) {
     console.log("valor maior que 20");
 } else {
     console.log("valor menor ou igual a 20");
 }
-*/
+
+//Exercicio 5
+//Utilizando for , descubra qual o maior valor contido no array e imprima-o;
 
 let numbers = [5, 9, 3, 19, 70, 8, 100, 2, 35, 27];
-let numero
 
+for(let index = 0; index < numbers.length; index =+ 1){
+    let numeroAtual = numbers[index]
+    console.log(numeroAtual);
+}
 
-for(let index = 0; index < numbers.length; index++) {
-    let numero = numbers[index]
-    if()
+console.log(numeroAtual);
 
