@@ -1,0 +1,21 @@
+.ordem {
+    background-color: yellow;
+}
+
+.par{
+    color: green;
+}
+
+.primo{
+    text-transform:uppercase;
+}
+
+.titulo{
+    color: red;
+    
+}
+
+h1.titulo{
+    width: 40px;
+    border:1px solid black;
+}

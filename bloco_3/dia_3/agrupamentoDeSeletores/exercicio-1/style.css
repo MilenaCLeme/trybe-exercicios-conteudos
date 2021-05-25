@@ -1,0 +1,16 @@
+h1, p{
+    text-align: center;
+    color: indianred;
+}
+
+li:hover{
+    background-color: indigo;
+}
+
+li:active{
+    color: aliceblue;
+}
+
+li{
+    list-style: none;
+}

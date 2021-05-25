@@ -1,0 +1,30 @@
+h3{
+    font-style: italic;
+}
+
+div:hover{
+    background-color: rgb(156, 133, 133);
+
+}
+
+#primeira:active{
+    color:seashell
+}
+
+#segunda:active{
+    color: teal;
+
+}
+
+#terceira:active{
+    color:violet;
+    font-size: 2em;
+}
+
+#quarta:active{
+    color: blue;
+}
+
+#quinta:active{
+    color: darkmagenta;
+}
