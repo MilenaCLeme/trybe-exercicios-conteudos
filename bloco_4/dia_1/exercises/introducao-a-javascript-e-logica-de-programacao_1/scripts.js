@@ -1,4 +1,4 @@
-/* Primeiro exercicio
+//Primeiro exercicio
 let a = 30;
 let b = 50;
 let sinal = "+"
@@ -17,10 +17,7 @@ if (sinal === "+") {
     console.log("Não é uma operação matematica");
 }
 
-*/
-
-/*
-Segundo exercicio
+//Segundo exercicio
 let b = 300;
 let c = 300;
 let sinal 
@@ -32,9 +29,9 @@ if (b > c) {
 } else {
     console.log("são iguais")
 }
-*/
 
-/* exercicio 3
+
+//exercicio 3
 
 let a = 500;
 let b = 500;
@@ -50,8 +47,8 @@ if (a > b && a > c) {
     console.log("nunhum é maior que outro");
 }
 
-*/
-/* exercicio quatro
+
+//Exercicio quatro
 let a = 0;
 
 if (a > 0){
@@ -61,8 +58,8 @@ if (a > 0){
 } else {
     console.log("zero")
 }
-*/
 
+//Exercicio 5
 let a = 50;
 let b = 50;
 let c = 80;
@@ -74,3 +71,5 @@ if (a + b + c === 180) {
 } else{ 
     console.log(false);
 }
+
+//Exercicio 6
