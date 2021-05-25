@@ -140,3 +140,24 @@ if (numberUne % 2 ==! 0 || numberTwo % 2 ==! 0 || numberThree % 2 ==! 0){
 } else {
     console.log("Algum numero sortiado é impar:" + false);
 }
+
+// Exercicio 10 
+// Valor do custo total é valor do custo mais o imposto sobre o produto
+// lucro é igual o valorvenda menos o valor custo total 
+// total de produtos = mil 
+
+let imposto = 0.2; 
+let totalDeProdutos = 1000;
+let lucro = 0; 
+let valorDoCusto = 100;
+let valorDaVenda = 200; 
+
+for(let index = 1; index < totalDeProdutos; index += 1){
+    let valorDoCustoTotal = (valorDoCusto * imposto) + valorDoCusto;
+    let valorDolucro = valorDaVenda - valorDoCustoTotal;
+    console.log("Valor do lucro de um produto " + valorDolucro);
+    let resultado = valorDolucro * index
+    console.log("Valor do lucro: " + resultado + " Atraves da venda de: " + index + " Quantidade de produtos");
+}
+
+//Exercicio 11
