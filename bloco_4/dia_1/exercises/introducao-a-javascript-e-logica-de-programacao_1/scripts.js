@@ -134,3 +134,9 @@ if (numberUne % 2 === 0 || numberTwo % 2 === 0 || numberThree % 2 === 0){
 }
 
 //Exercicio 9
+
+if (numberUne % 2 ==! 0 || numberTwo % 2 ==! 0 || numberThree % 2 ==! 0){
+    console.log("Algum numero sortiado é impar:" + true);
+} else {
+    console.log("Algum numero sortiado é impar:" + false);
+}
