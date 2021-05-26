@@ -48,8 +48,11 @@ for(let index = 0; index < numeros.length; index =+ 1){
 }
 
 console.log(numeroMax);
-// outra forma de executar o arquivo 5
+// outra forma de executar o exercicio 5
+let numerosExercicioCinco = [5, 9, 3, 19, 70, 8, 100, 2, 35, 27];
+let numeroMaximoExercicioCinco = Math.max(...numerosExercicioCinco);
 
+console.log(numeroMaximoExercicioCinco);
 // Exercicio 6
 
 let arraynumbrs = [5, 9, 3, 19, 70, 8, 100, 2, 35, 27];
