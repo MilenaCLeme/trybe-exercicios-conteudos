@@ -26,3 +26,11 @@ for(let index = 0; index < repedir; index += 1){
     console.log(caract);
 }
 
+//3 -Agora inverta o lado do triângulo. 
+
+
+
+//4- Depois, faça uma pirâmide com n asteriscos de base:
+
+
+
