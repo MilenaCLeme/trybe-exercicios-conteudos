@@ -13,5 +13,16 @@ for(let indexSegundo = 0; indexSegundo < nVezesDeRepedição; indexSegundo += 1)
     console.log(caracteristica);
 }
 
+//2- 2- Para o segundo exercício, faça o mesmo que antes, mas que imprima um triângulo retângulo com 5 asteriscos de base.
 
+//Qual a variavel que precisa imprimir
+let caract = "";
+
+//repedir x vezes
+let repedir = 5;
+
+for(let index = 0; index < repedir; index += 1){
+    caract += "*";
+    console.log(caract);
+}
 
