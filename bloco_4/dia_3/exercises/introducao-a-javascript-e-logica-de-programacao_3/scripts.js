@@ -27,7 +27,18 @@ for(let index = 0; index < repedir; index += 1){
 }
 
 //3 -Agora inverta o lado do triângulo. 
+//valores que precisaram ser imprimidos 
+let caractr = "r";
+let caractestilo = "*";
+let resultadofinal = 0;
+let resultado = 0;
 
+//quantas vezes 
+let numeroDeVezes = 5;
+
+for(let index = 0; index < numeroDeVezes; index += 1){
+    resultado += caractr 
+}
 
 
 //4- Depois, faça uma pirâmide com n asteriscos de base:
