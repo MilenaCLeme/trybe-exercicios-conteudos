@@ -46,3 +46,17 @@ let infoTwo = {
 
   //Exercicio de Função
   //Crie uma função que receba uma string e retorne true se for um palíndromo , ou false , se não for.
+
+  function verificaPalindromo(words) {
+      if(words.split('').reverse().join('') === words) {
+          console.log("É um palíndromo:" + true);
+      } else {
+          console.log("É um palindromo:" + false);
+      }
+  }
+
+  verificaPalindromo("arara");
+
+  //Crie uma função que receba um array de inteiros e retorne o índice do maior valor.
+
+  
