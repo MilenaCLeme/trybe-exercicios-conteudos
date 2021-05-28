@@ -43,3 +43,6 @@ let infoTwo = {
   } else {
       console.log(info["recorrente"] + ' ' + infoTwo["recorrente"] );
   }
+
+  //Exercicio de Função
+  //Crie uma função que receba uma string e retorne true se for um palíndromo , ou false , se não for.
