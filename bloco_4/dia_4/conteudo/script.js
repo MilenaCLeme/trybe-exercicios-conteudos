@@ -23,3 +23,15 @@ console.log("A jogadora " + player["name"] + " "+ player["lastaName"] + " foi el
 
 //Acesse a chave medals e faça um console.log no seguinte formato: "A jogadora possui 2 medalhas de ouro e 3 medalhas de prata".
 console.log("A jogadora possui " + player.medalas.golden + " medalhas de ouro e " + player.medalas.silver + " medalhas de prata");
+
+//Conteudo for/in 
+
+let names = {
+    person1: 'João',
+    person2: 'Maria',
+    person3: 'Jorge' 
+  };
+
+  for(index in names){
+      console.log("Olá" +  " " + names[index]);
+  }
