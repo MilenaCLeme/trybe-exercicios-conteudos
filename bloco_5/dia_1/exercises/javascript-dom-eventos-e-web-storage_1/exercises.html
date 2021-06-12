@@ -46,15 +46,51 @@
         - document.getElementsByTagName()
         */
  //Crie uma função que mude o texto na tag <p> para uma descrição de como você se vê daqui a 2 anos. (Não gaste tempo pensando no texto e sim realizando o exercício)
- let textoMudar = document.querySelectorAll(".cl")
- 
- function mudartext ()
+mudartext()
+
+function mudartext() {
+   let mudartext = document.getElementsByTagName('p');
+   mudartext[0].innerHTML = "EU"
+ }
 // Crie uma função que mude a cor do quadrado amarelo para o verde da Trybe (rgb(76,164,109)).
+function mudarCor() {
+  document.getElementsByClassName('main-content')[0].style.backgroundColor = "rgb(76,164,109)";
+}
+
+mudarCor()
 // Crie uma função que mude a cor do quadrado vermelho para branco.
+function mudarCordoQuadro() {
+  document.getElementsByClassName('center-content')[0].style.backgroundColor = "white"
+}
+
+mudarCordoQuadro()
 // Crie uma função que corrija o texto da tag <h1>.
+  function mudarTextoH1() {
+    document.getElementsByTagName('h1')[0].innerHTML = "Eu estou estudando";
+  }
+
+  mudarTextoH1()
 // Crie uma função que modifique todo o texto da tag <p> para maiúsculo.
+  function mudarParaMaisculo() {
+    let textMaiusculo = document.getElementsByTagName('p')
+    for(let index = 0; index < textMaiusculo.length; index += 1) {
+      let textNovo = textMaiusculo[index].innerHTML
+      let novo = textNovo.toUpperCase()
+      textMaiusculo[index].innerHTML = novo;
+    }
+  }
+
+  mudarParaMaisculo()
 // Crie uma função que exiba o conteúdo de todas as tags <p> no console.
-        
+  function exibirDoConsole() {
+    let elementoP = document.getElementsByTagName('p')
+    for (let index = 0; index < elementoP.length; index += 1){
+      let textConteudo = elementoP[index].innerHTML
+      console.log(textConteudo);
+    }
+  }
+   
+  exibirDoConsole();
     </script>
   </body>
 </html>
