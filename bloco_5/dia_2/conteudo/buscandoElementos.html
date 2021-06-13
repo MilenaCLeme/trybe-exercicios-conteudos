@@ -20,7 +20,56 @@
         </div>
       </div>
 <script>
+  //Acesse o elemento elementoOndeVoceEsta .
+  let acessar = document.getElementById('elementoOndeVoceEsta')
+  //Acesse pai a partir de elementoOndeVoceEsta e adicione uma color a ele.
+  let acessoPai = acessar.parentElement
+  acessoPai.style.backgroundColor = 'red'
+
+  //Acesse o primeiroFilhoDoFilho e adicione um texto a ele. Você se lembra dos vídeos da aula anterior, como fazer isso?
+  let elementoPrimeiroFilho = acessar.firstElementChild
+  elementoPrimeiroFilho.innerHTML = "eu amo"
   
+  //Acesse o primeiroFilho a partir de pai .
+  let elementoPrimeiro = document.getElementById('pai').firstElementChild
+
+  //Agora acesse o primeiroFilho a partir de elementoOndeVoceEsta .
+  let elementoDeNovo = acessar.previousElementSibling
+
+  //Agora acesse o texto Atenção! a partir de elementoOndeVoceEsta .
+  let text = acessar.parentElement.innerHTML
+
+
+  //Agora acesse o terceiroFilho a partir de elementoOndeVoceEsta .
+  let proximoelemento = acessar.nextElementSibling
+
+  //Agora acesse o terceiroFilho a partir de pai .
+  let elementoPaii = document.getElementById('pai')
+  let arrayElemento = elementoPaii.children
+  let unicoElemento = arrayElemento[2]
+  
+
+  //Crie um irmão para elementoOndeVoceEsta .
+  let criandoElemento = document.createElement('p')
+  elementoPaii.appendChild(criandoElemento);
+
+  //Crie um filho para elementoOndeVoceEsta .
+  let criandoFilho = document.createElement('div')
+  acessar.appendChild(criandoFilho);
+
+  //Crie um filho para primeiroFilhoDoFilho .
+  let elementoFilhoDoFilho = document.getElementById('primeiroFilhoDoFilho')
+  let criandoFilhos = document.createElement('p')
+  elementoFilhoDoFilho.appendChild(criandoFilhos)
+
+  //A partir desse filho criado, acesse terceiroFilho .
+  let acessandoFilhoCriado = document.getElementsByTagName('p')[0]
+
+  //Remova todos os elementos filhos de paiDoPai exceto pai , elementoOndeVoceEsta e primeiroFilhoDoFilho .
+  let elementoPaiPai = document.getElementById('pai')
+  elementoPaiPai.remove()
+
+
 </script>
 </body>
 </html>
