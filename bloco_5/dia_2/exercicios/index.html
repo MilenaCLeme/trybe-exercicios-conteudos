@@ -97,13 +97,18 @@
       
 
       //Adicione uma lista não ordenada com os valores de 1 a 10 por extenso como valores da lista. Essa lista deve ser filha do div criado no passo 6;
-      let elementoUl = document.createElement('ul')
-      elementoDivFilhoTres.appendChild(elementoUl)
-      for(let index = 1; index <= 10; index += 1) {
+      
+      function criar() {
+        let elementoUl = document.createElement('ul')
+        elementoDivFilhoTres.appendChild(elementoUl)
+        for(let index = 1; index <= 10; index += 1) {
         let elementoLi = document.createElement('li')
         elementoUl.appendChild(elementoLi)
         elementoLi.innerHTML = index
+        }
       }
+
+      criar()
 
       //Adicione 3 tags h3 , todas sendo filhas do div criado no passo 2.
       for(let index = 0; index < 3; index += 1){
@@ -111,8 +116,42 @@
         elmentoDiv.appendChild(elementoH3)
       }
 
+      //Adicione a classe title na tag h1 criada;
+      elementoh1.classList.add('title')
 
+      //Adicione a classe description nas 3 tags h3 criadas;
+      let elementoH3feito = document.getElementsByTagName('h3')
+      for(let index = 0; index < elementoH3feito.length; index += 1){
+        elementoH3feito[index].classList.add('description')
+      }
+
+      //Remova o div criado no passo 5 (aquele que possui a classe left-content ). Utilize a função .removeChild() ;
+      elmentoDiv.removeChild(elementoDivFilhoDois)
+
+      //Centralize o div criado no passo 6 (aquele que possui a classe right-content ). Dica: para centralizar, basta configurar o margin-right: auto do div ;
+      elementoDivFilhoTres.style.marginRight = "auto"
+
+      //Troque a cor de fundo do elemento pai da div criada no passo 3 (aquela que possui a classe center-content ) para a cor verde;
+      elmentoDiv.style.backgroundColor = "green"
       
+      //Remova os dois últimos elementos ( nove e dez ) da lista criada no passo 8.
+      function criarNovo() {
+        let elementoFilhoTres = document.getElementsByClassName('right-content')[0]
+        elementoFilhoTres.remove()
+        let elementoUll = document.createElement('ul')
+        let elementodois = document.getElementsByClassName('center-content')[0]
+        elementodois.appendChild(elementoUll)
+        for(let index = 1; index <= 8; index += 1) {
+        let elementoLi = document.createElement('li')
+        elementoUll.appendChild(elementoLi)
+        elementoLi.innerHTML = index
+        }
+      } 
+
+      criarNovo()
+
+
+
     </script>
   </body>
 </html>
