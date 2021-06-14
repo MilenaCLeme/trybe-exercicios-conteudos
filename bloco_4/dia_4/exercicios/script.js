@@ -59,4 +59,19 @@ let infoTwo = {
 
   //Crie uma função que receba um array de inteiros e retorne o índice do maior valor.
 
+  function maiorNumero(recebeArray){
+      let maior = Math.max(...recebeArray)
+      let repedir = 0 
+      for (let index = 0; index < recebeArray.length; index += 1) {
+          if(recebeArray[index] === maior){
+              repedir += 1
+          }
+      }
+      console.log(repedir);
+  }
+
+  //Crie uma função que receba uma string word e outra string ending . Verifique se a string ending é o final da string word . Considere que a string ending sempre será menor que a string word .
+
+  
+
   
