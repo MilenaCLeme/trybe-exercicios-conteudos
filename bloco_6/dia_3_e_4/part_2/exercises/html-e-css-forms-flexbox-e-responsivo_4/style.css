@@ -31,6 +31,7 @@ body {
   display: flex;
   width: 100%;
   justify-content:space-evenly;
+  align-self: center;
 }
 
 .menu-container li {
