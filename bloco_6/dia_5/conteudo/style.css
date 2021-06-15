@@ -54,14 +54,34 @@ p strong {
   width: 200px;
 }
 
-.card:nth-of-type(1) {
-  background-color: #0fa36b;
+
+
+@media screen and (max-width: 500px) {
+  .card {
+    display: flex;
+  }  
+  .card:nth-of-type(1) {
+    background-color: #0fa36b;
+  }
+  .dont-show {
+    color: black;
+  }
 }
 
-.card:nth-of-type(2) {
-  background-color: #0255c2;
+@media screen and (max-width: 1000px) and (min-width: 600px) {
+  .card {
+    display: flex;
+  }  
+  .card:nth-of-type(2) {
+    background-color: #0255c2;
+  }  
 }
 
-.card:nth-of-type(3) {
-  background-color: #41197f;
+@media screen and (max-width:950px) and (min-width:650px){
+  .card {
+    display: flex;
+  }  
+  .card:nth-of-type(3) {
+    background-color: #41197f;
+  }
 }
