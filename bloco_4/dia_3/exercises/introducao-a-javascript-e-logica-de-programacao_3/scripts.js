@@ -29,20 +29,28 @@ for(let index = 0; index < repedir; index += 1){
 //3 -Agora inverta o lado do triângulo. 
 //valores que precisaram ser imprimidos 
 
-let caractr = "rrrrr";
-let caractestilo = "*";
-let resultadofinal = 0;
-let resultado = "";
+let n = 5;
+let n2 = n;
+let line = "";
+let estrela = "*";
+
+for (let index = 0; index < n; index += 1) {
+    for (let jindex = 0; jindex <= n; jindex += 1  ) {
+        if (jindex < n2){
+            line += " "
+        } else {
+            line += "*"
+        }
+    }
+    console.log(line);
+    line = "";
+    n2 -= 1;
+}
+
+//  Depois, faça uma pirâmide com n asteriscos de base:
 
 
-//quantas vezes 
-let numeroDeVezes = 5;
 
-for(let index = 0; index < numeroDeVezes; index += 1){
-    
+//Faça uma pirâmide com n asteriscos de base que seja vazia no meio. Assuma que o valor de n será sempre ímpar:
 
-
-//4- Depois, faça uma pirâmide com n asteriscos de base:
-
-
-
+//Faça um programa que diz se um número definido numa variável é primo ou não.
