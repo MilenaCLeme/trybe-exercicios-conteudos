@@ -47,10 +47,28 @@ for (let index = 0; index < n; index += 1) {
     n2 -= 1;
 }
 
+
+let repedir = 5 
+let base = ""
+
+for(let index = 1; index <= repedir; index += 1){
+    for(let indexS = 1; indexS <= (repedir - index); indexS += 1){
+        base += " ";
+    }
+    for(let indexSe = 1; indexSe <= index; indexSe += 1){
+        base += "*"
+    }
+    console.log(base)
+    base = ""
+}
+
+
 //  Depois, faça uma pirâmide com n asteriscos de base:
+
 
 
 
 //Faça uma pirâmide com n asteriscos de base que seja vazia no meio. Assuma que o valor de n será sempre ímpar:
 
 //Faça um programa que diz se um número definido numa variável é primo ou não.
+
