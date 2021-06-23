@@ -145,3 +145,14 @@ console.log(newPerson);
 console.log(person);
 
 //Agora, apenas o objeto newPerson será modificado.
+
+//teste 
+
+const teste = {
+  nome: 'milena',
+  sobrenome: 'leme',
+  casa: 333
+}
+
+
+console.log(Object['milena'])
