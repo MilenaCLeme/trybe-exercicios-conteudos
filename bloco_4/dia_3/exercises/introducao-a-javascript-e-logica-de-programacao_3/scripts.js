@@ -99,7 +99,7 @@ let estrela = '*';
 for (let linha = 1; linha <= meio; linha += 1) {
     let linhas = '';
     for (let coluna = 1; coluna <= n; coluna += 1) {
-        if (coluna == controleEsquerda || coluna == controleDireita || linha == meio) { // Porque tem essa Linha ? 
+        if (coluna == controleEsquerda || coluna == controleDireita || linha == meio) { 
             linhas += estrela;
         } else {
             linhas += ' ';
