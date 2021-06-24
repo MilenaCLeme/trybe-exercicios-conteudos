@@ -81,7 +81,7 @@ const pontuacaoDosEstudantes = (gabarito, respostas, clakback) => {
 const mage = {
   healthPoints: 130,
   intelligence: 45,
-  mana: 125,
+  mana: 10,
   damage: undefined,
 };
 
@@ -98,7 +98,7 @@ const dragon = {
   damage: undefined,
 };
 
-//const battleMembers = { mage, warrior, dragon };
+const battleMembers = { mage, warrior, dragon };
 
 //Crie uma função que retorna o dano do dragão.
 //O dano será um número aleatório entre 15 (dano mínimo) e o valor do atributo strength (dano máximo).
@@ -117,16 +117,47 @@ const danoDoWarrior = () => {
 //Crie uma função que retorna um objeto com duas chaves e dois valores contendo o dano e a mana gasta pelo mago em um turno.
 //O dano será um número aleatório entre o valor do atributo intelligence (dano mínimo) e o valor de intelligence * 2 (dano máximo).
 //A mana consumida por turno é 15. Além disto a função deve ter uma condicional, caso o mago tenha menos de 15 de mana o valor de dano recebe uma mensagem (Ex: "Não possui mana suficiente") e a mana gasta é 0.
-const manaMenos = mage.mana
-let diminuicao = 0
 
 
 const danoDoMago = () => {
   let danoMagicoMax = mage.intelligence * 2; 
   const objDanoManaGasta = {
     dano: Math.floor(Math.random() * (danoMagicoMax - mage.intelligence) + danoMagicoMax),
+    mana: mage.mana -= 15,
+  }
+  if(objDanoManaGasta.mana < 15) {
+    objDanoManaGasta.mana = 'Não possui mana suficiente';
+    objDanoManaGasta.dano = 0;
   }
   return objDanoManaGasta
 }
 
-console.log(danoDoMago())
+const gameActions = {
+  // Crie as HOFs neste objeto.
+  personagemWarrie: (danoDoPersonagemWarrior) => {
+    let danoCausado = danoDoPersonagemWarrior();
+    dragon.healthPoints -= danoCausado;
+    warrior.damage = danoCausado;
+  },
+  personagemMago: (danoDoPersonagemMago) => {
+    let obj = danoDoPersonagemMago();
+    dragon.healthPoints -= obj.dano;
+    mage.damage = obj.dano;
+    mage.mana = obj.mana
+  },
+  personagemDragao: (danoDoPersonagemDragao) => {
+    let danoDragao = danoDoPersonagemDragao();
+    mage.healthPoints -= danoDragao;
+    warrior.healthPoints -= danoDragao;
+    dragon.damage = danoDragao;
+  },
+  finalDoTurno: () => {
+    return battleMembers;
+  }
+};
+
+gameActions.personagemMago(danoDoMago)
+
+console.log(gameActions.finalDoTurno())
+
+//feito junto com o gustavo braga; 
