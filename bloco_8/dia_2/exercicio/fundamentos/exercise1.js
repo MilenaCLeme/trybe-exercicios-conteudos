@@ -75,3 +75,44 @@ function authorBornIn1947() {
 }
 
 assert.strictEqual(authorBornIn1947(), 'Stephen King');
+
+//2 - Retorne o nome do livro de menor nome.
+//Dica: use a função forEach .
+
+function smallerName() {
+  let nameBook = ''
+  // escreva aqui o seu código
+  books.forEach(element => {
+    if(nameBook === '') {
+      nameBook = element.name 
+    }
+    if(element.name.length < nameBook.length) {
+      nameBook = element.name
+    }
+  });
+  // Variável nameBook que receberá o valor do menor nome;
+  return nameBook;
+}
+
+assert.strictEqual(smallerName(), 'Duna');
+
+// Encontre o primeiro livro cujo nome possui 26 caracteres
+
+const expectedResult = [{
+  author: {
+    birthYear: 1948,
+    name: 'George R. R. Martin',
+  },
+  genre: 'Fantasia',
+  id: 1,
+  name: 'As Crônicas de Gelo e Fogo',
+  releaseYear: 1991,
+}];
+
+function getNamedBook() {
+  const primeiroLivroCom26
+  //ainda não consegui
+  return primeiroLivroCom26
+}
+
+assert.deepStrictEqual(getNamedBook(), expectedResult);
