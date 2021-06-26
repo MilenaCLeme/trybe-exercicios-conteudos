@@ -116,11 +116,11 @@ function getNamedBook() {
   return arrayDoPrimeiroLivro;
 }
 
-assert.deepStrictEqual(getNamedBook(), expectedResult3);
+//assert.deepStrictEqual(getNamedBook(), expectedResult3);
 
 //Ordene os livros por data de lançamento em ordem decrescente.
 
-const expectedResult = [
+const expectedResult7 = [
   {
     id: 1,
     name: 'As Crônicas de Gelo e Fogo',
@@ -166,7 +166,14 @@ const expectedResult = [
 ];
 
 function booksOrderedByReleaseYearDesc() {
-  // escreva aqui seu código
+  const livroOrdenados = books 
+  livroOrdenados.sort((livro1, livro2) => livro2.releaseYear - livro1.releaseYear)
+  return livroOrdenados;
 }
 
-assert.deepStrictEqual(booksOrderedByReleaseYearDesc(), expectedResult);
+//console.log(booksOrderedByReleaseYearDesc())
+
+assert.deepStrictEqual(booksOrderedByReleaseYearDesc(), expectedResult7);
+
+
+
