@@ -110,9 +110,7 @@ const expectedResult = [{
 }];
 
 function getNamedBook() {
-  const primeiroLivroCom26
-  //ainda não consegui
-  return primeiroLivroCom26
+  
 }
 
 assert.deepStrictEqual(getNamedBook(), expectedResult);
