@@ -173,7 +173,19 @@ function booksOrderedByReleaseYearDesc() {
 
 //console.log(booksOrderedByReleaseYearDesc())
 
-assert.deepStrictEqual(booksOrderedByReleaseYearDesc(), expectedResult7);
+//assert.deepStrictEqual(booksOrderedByReleaseYearDesc(), expectedResult7);
+
+//Faça uma função que retorne true , se todas as pessoas autoras nasceram no século XX, ou false , caso contrário.
+
+const expectedResult = false;
+
+function everyoneWasBornOnSecXX() {
+  const autoresSexuloXX = books.every((livro) => livro.author.birthYear > 2000)
+  return autoresSexuloXX;
+}
+
+assert.strictEqual(everyoneWasBornOnSecXX(), expectedResult);
+
 
 
 
