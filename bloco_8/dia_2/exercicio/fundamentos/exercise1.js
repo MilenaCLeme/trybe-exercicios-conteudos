@@ -184,8 +184,15 @@ function everyoneWasBornOnSecXX() {
   return autoresSexuloXX;
 }
 
-assert.strictEqual(everyoneWasBornOnSecXX(), expectedResult);
+//assert.strictEqual(everyoneWasBornOnSecXX(), expectedResult);
 
+//Faça uma função que retorne true , se algum livro foi lançado na década de 80, e false , caso contrário
 
+const expectedResult8 = true;
 
+function someBookWasReleaseOnThe80s() {
+  const livroAnosOitenta = books.some((livro) => livro.releaseYear >= 1980 && livro.releaseYear < 1990)
+  return livroAnosOitenta;
+}
 
+assert.strictEqual(someBookWasReleaseOnThe80s(), expectedResult8);
