@@ -118,3 +118,23 @@ function algorismoRomano (romano) {
 
 algorismoRomano('IV')
 
+//Crie uma função chamada arrayOfNumbers que receberá a variável vector como parâmetro. Através de um loop for , percorra essa variável, busque os números pares e os adicione a um novo array que deverá ser retornado ao final pela pela função.
+
+
+let novo = [[1, 2], [3,4,5,6], [7,8,9,10]];
+
+function arrayOfNumbers(vector) {
+    let novoArray = []
+    for (let index = 0; index < vector.length; index += 1) {
+        let array = vector[index]
+        for(let indexS = 0; indexS < array.length; indexS += 1) {
+            if (array[indexS] % 2 === 0) {
+                novoArray.push(array[index])
+            }
+        }
+    }
+    console.log(novoArray)
+}
+
+arrayOfNumbers(novo)
+
