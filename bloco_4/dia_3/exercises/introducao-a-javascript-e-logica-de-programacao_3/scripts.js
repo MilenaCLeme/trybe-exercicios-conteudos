@@ -114,3 +114,15 @@ for (let linha = 1; linha <= meio; linha += 1) {
 
 //Faça um programa que diz se um número definido numa variável é primo ou não.
 
+let numero = 2;
+let numeroDeVezes = 0
+for (let index = 0; index < numero; index += 1) {
+    if (numero % index === 0) {
+     numeroDeVezes += 1       
+    }
+}
+if(numeroDeVezes === 2) {
+    console.log(`${numero} é primo`);
+} else {
+    console.log(`${numero} não é primo`);
+}
