@@ -70,8 +70,51 @@ let infoTwo = {
       console.log(repedir);
   }
 
-  //Crie uma função que receba uma string word e outra string ending . Verifique se a string ending é o final da string word . Considere que a string ending sempre será menor que a string word .
+//Crie uma função que receba uma string word e outra string ending . Verifique se a string ending é o final da string word . Considere que a string ending sempre será menor que a string word .
 
-  
+function palavraFi (word, ending) {
+    console.log(word.endsWith(`${ending}`))
+}
 
-  
+palavraFi('joaofernando', 'fernan')
+
+//Bonus 
+
+function algorismoRomano (romano) {
+    let numero = []
+    for (let index = 0; index < romano.length; index += 1) {
+        if (romano[index] === 'I') {
+            numero.push(1)
+        } else if (romano[index] === 'V') {
+            numero.push(5)
+        } else if (romano[index] === 'X') {
+            numero.push(10)
+        } else if (romano[index] === 'L') {
+            numero.push(50)
+        } else if (romano[index] === 'C') {
+            numero.push(100)
+        } else if (romano[index] === 'D') {
+            numero.push(500)
+        } else if (romano[index] === 'M') {
+            numero.push(1000)
+        }
+    }
+    let soma = 0
+    if (soma === 0) {
+        soma += numero[0]
+    }
+    for (let index = 1; index < numero.length; index += 1) {
+        if (numero[0] >= numero[index]) {
+            soma += numero[index]
+        } else {
+            soma -= numero[index]
+        }
+    }
+    if (soma < 0) {
+        soma = soma / -1 
+    }
+    console.log(soma)
+}
+
+algorismoRomano('IV')
+
