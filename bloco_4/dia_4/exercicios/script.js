@@ -70,8 +70,112 @@ let infoTwo = {
       console.log(repedir);
   }
 
-  //Crie uma função que receba uma string word e outra string ending . Verifique se a string ending é o final da string word . Considere que a string ending sempre será menor que a string word .
+//Crie uma função que receba uma string word e outra string ending . Verifique se a string ending é o final da string word . Considere que a string ending sempre será menor que a string word .
 
-  
+function palavraFi (word, ending) {
+    console.log(word.endsWith(`${ending}`))
+}
 
-  
+palavraFi('joaofernando', 'fernan')
+
+//Bonus 
+
+function algorismoRomano (romano) {
+    let numero = []
+    for (let index = 0; index < romano.length; index += 1) {
+        if (romano[index] === 'I') {
+            numero.push(1)
+        } else if (romano[index] === 'V') {
+            numero.push(5)
+        } else if (romano[index] === 'X') {
+            numero.push(10)
+        } else if (romano[index] === 'L') {
+            numero.push(50)
+        } else if (romano[index] === 'C') {
+            numero.push(100)
+        } else if (romano[index] === 'D') {
+            numero.push(500)
+        } else if (romano[index] === 'M') {
+            numero.push(1000)
+        }
+    }
+    let soma = 0
+    if (soma === 0) {
+        soma += numero[0]
+    }
+    for (let index = 1; index < numero.length; index += 1) {
+        if (numero[0] >= numero[index]) {
+            soma += numero[index]
+        } else {
+            soma -= numero[index]
+        }
+    }
+    if (soma < 0) {
+        soma = soma / -1 
+    }
+    console.log(soma)
+}
+
+algorismoRomano('IV')
+
+//Crie uma função chamada arrayOfNumbers que receberá a variável vector como parâmetro. Através de um loop for , percorra essa variável, busque os números pares e os adicione a um novo array que deverá ser retornado ao final pela pela função.
+
+
+let novo = [[1, 2], [3,4,5,6], [7,8,9,10]];
+
+function arrayOfNumbers(vector) {
+    let novoArray = []
+    for (let index = 0; index < vector.length; index += 1) {
+        let array = vector[index]
+        for(let indexS = 0; indexS < array.length; indexS += 1) {
+            if (array[indexS] % 2 === 0) {
+                novoArray.push(array[index])
+            }
+        }
+    }
+    console.log(novoArray)
+}
+
+arrayOfNumbers(novo)
+
+//A partir do array de frutas basket , retorne um objeto que contenha o nome da fruta como chave e a quantidade de vezes que ela aparece no array como valor. Por exemplo, o array ['Melancia', 'Abacate', 'Melancia', 'Melancia', 'Uva'], deverá retornar { Melancia: 3, Abacate: 1, Uva: 1 } quando passado como argumento para a função. Em seguida, imprima esse resultado na tela com uma mensagem no seguinte formato: Sua cesta possui: x Melancias, x Abacates...
+
+
+const cestas = [
+    'Melancia', 'Abacate', 'Melancia', 'Melancia', 'Uva', 'Laranja',
+    'Jaca', 'Pera', 'Melancia', 'Uva', 'Laranja', 'Melancia',
+    'Banana', 'Uva', 'Pera', 'Abacate', 'Laranja', 'Abacate',
+    'Banana', 'Melancia', 'Laranja', 'Laranja', 'Jaca', 'Uva',
+    'Banana', 'Uva', 'Laranja', 'Pera', 'Melancia', 'Uva',
+    'Jaca', 'Banana', 'Pera', 'Abacate', 'Melancia', 'Melancia',
+    'Laranja', 'Pera', 'Banana', 'Jaca', 'Laranja', 'Melancia',
+    'Abacate', 'Abacate', 'Pera', 'Melancia', 'Banana', 'Banana',
+    'Abacate', 'Uva', 'Laranja', 'Banana', 'Abacate', 'Uva',
+    'Uva', 'Abacate', 'Abacate', 'Melancia', 'Uva', 'Jaca',
+    'Uva', 'Banana', 'Abacate', 'Banana', 'Uva', 'Banana',
+    'Laranja', 'Laranja', 'Jaca', 'Jaca', 'Abacate', 'Jaca',
+    'Laranja', 'Melancia', 'Pera', 'Jaca', 'Melancia', 'Uva',
+    'Abacate', 'Jaca', 'Jaca', 'Abacate', 'Uva', 'Laranja',
+    'Pera', 'Melancia', 'Jaca', 'Pera', 'Laranja', 'Jaca',
+    'Pera', 'Melancia', 'Jaca', 'Banana', 'Laranja', 'Jaca',
+    'Banana', 'Pera', 'Abacate', 'Uva',
+];
+
+const conjDeFrutas = ['Melancia', 'Abacate', 'Melancia', 'Melancia', 'Uva'];
+
+function cestaDeFrutasComTodasAsFrutas(arrayCesta, arrayFrutas) {
+    let cesta = {}  
+    for (let index = 0; index < arrayFrutas.length; index += 1){
+        let fruta = arrayFrutas[index]
+        let soma = 0
+        for (let indexS = 0; indexS < arrayCesta.length; index += 1) {
+            if (fruta === arrayCesta){
+            soma += 1
+            }
+        }
+        cesta.fruta = soma
+    }
+    console.log(cesta)
+}
+
+cestaDeFrutasComTodasAsFrutas(cestas, conjDeFrutas)
