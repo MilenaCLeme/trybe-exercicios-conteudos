@@ -1,0 +1,22 @@
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+@media screen and (max-width: 640px) {
+
+  .header {
+    
+    
+  }
+}
+
+@media screen and (max-width: 1007px) and (min-width: 641) {
+  
+}
+
+@media screen and (min-width: 1008px) {
+  
+}
