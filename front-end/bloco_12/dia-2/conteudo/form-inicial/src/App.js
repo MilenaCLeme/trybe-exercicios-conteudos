@@ -1,26 +1,11 @@
 import './App.css';
+import Formulario from './Formulario';
 
 function App() {
   return (
     <div className="App">
-      <h1>Formulario</h1>
-      <form>
-        <fieldset>
-          <select>
-            <option value="Familia">Familia</option>
-            <option value="Amizade">Amizade</option>
-          </select>
-          <label htmlFor="numero">
-            <input name="numero" id="numero" type="number" />
-          </label>
-          <label htmlFor="texto">
-            <input type="text" name="texto" id="texto" />
-          </label>
-          <label>
-            <textarea />
-          </label>
-        </fieldset>
-      </form>
+      <h1>Formulario test</h1>
+      <Formulario />
     </div>
   );
 }
