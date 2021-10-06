@@ -32,6 +32,7 @@ class Formulario extends React.Component {
     this.handlerChangeCargo = this.handlerChangeCargo.bind(this);
     this.handlerChangeDescricao = this.handlerChangeDescricao.bind(this);
     this.PegarInformação = this.PegarInformação.bind(this);
+    this.funcaoParaApagar = this.funcaoParaApagar.bind(this);
   }
 
   handlerChangeName(event) {
@@ -164,6 +165,22 @@ class Formulario extends React.Component {
     }
   }
 
+  funcaoParaApagar() {
+    this.setState({
+      nome: '',
+      email: '',
+      cpf: '',
+      endereco: '',
+      cidade: '',
+      estado: 'Acre',
+      tipo: '',
+      resumo: '',
+      cargo: '',
+      descricao: '',
+      enviar: false,
+    })
+  }
+
   render() {
     const { nome, email, cpf, endereco, cidade, estado, tipo } = this.state;
     return (
@@ -258,6 +275,7 @@ class Formulario extends React.Component {
         <fieldset>
           <button type="button" onClick={() => this.PegarInformação() }>Enviar</button>
           { this.funcaoDaDiv() }
+          <button type="button" onClick={() => this.funcaoParaApagar() }>Limpar</button>
         </fieldset>
       </form>
     );
