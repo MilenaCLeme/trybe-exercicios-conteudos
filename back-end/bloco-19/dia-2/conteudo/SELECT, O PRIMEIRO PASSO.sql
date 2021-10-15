@@ -16,5 +16,7 @@ SELECT now() AS data_atual;
 
 SELECT * FROM sakila.city;
 SELECT * from sakila.customer;
+SELECT first_name, last_name FROM sakila.customer;
 SELECT * FROM sakila.rental;
-SELECT title, release_year FROM sakila.film;
+SELECT * FROM sakila.film;
+SELECT title, description, release_year FROM sakila.film;
