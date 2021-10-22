@@ -47,4 +47,5 @@ WHERE director = 'Andrew Staton';
 SELECT * FROM Pixar.Movies WHERE director = 'Andrew Staton';
 DELETE FROM Pixar.BoxOffice
 WHERE movie_id in (2, 9);
+DELETE FROM Pixar.Movies WHERE director = 'Andrew Staton';
 
