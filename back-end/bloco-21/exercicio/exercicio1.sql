@@ -7,7 +7,7 @@ CREATE DATABASE IF NOT EXISTS zoo;
 -- cuidador (cuidador_id, nome, gerente_id)
 -- gerente (gerente_id, nome)
 -- cuidados_animais (cuidados_animais, animal_id, cuidador_id)
-USE ZOO;
+USE zoo;
 
 CREATE TABLE animais(
 	animal_id INT PRIMARY KEY AUTO_INCREMENT,
@@ -31,9 +31,11 @@ CREATE TABLE cuidadores(
 );
 
 CREATE TABLE cuidados_animais(
-	cuidados_animais_id INT PRIMARY KEY AUTO_INCREMENT, 
+	cuidados_animais_id INT NOT NULL, 
     cuidador_id INT NOT NULL,
-    animal_id INT NOT NULL, 
+    animal_id INT NOT NULL,
+    CONSTRAINT PRIMARY KEY (cuidador_id, animal_id),
     FOREIGN KEY (cuidador_id) REFERENCES cuidadores (cuidador_id),
     FOREIGN KEY (animal_id) REFERENCES animais (animal_id)
 );
+
