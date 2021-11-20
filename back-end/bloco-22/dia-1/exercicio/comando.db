@@ -16,6 +16,20 @@ exit
 -- Verifique na sua lista de containers , qual o container é referente ao exercício que acabou de praticar.
 docker container ls -l;
 
+-- Inicie o mesmo container novamente , sem criar outro. Valide se ele está ativo na lista de containers;
+docker start <numero ou nome do container >
+
+-- Retome o container que foi criado anteriormente nesse exercício .
+docker attach <numero do id do container ou nome do container>
+
+-- Rode o comando cat /etc/debian_version que deve retornar a versão atual do sistema do container ;
+cat /etc/debian_version
+
+-- Encerre o terminal .
+exit
+
+-- Remova somente o container criado para esse exercício .
+docker container rm <numero do id do container ou nome do container>
 
 
 
