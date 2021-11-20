@@ -1,0 +1,18 @@
+// Operadores de Comparação;
+// Operador $lt  - menor do que 
+db.inventory.find({ qty: { $lt: 20 } });
+
+// Operador $lte -  menor ou igual
+db.inventory.find({ qty: { $lte: 20 } });
+
+// Operador $gt -  maior do que
+db.inventory.find({ qty: { $gt: 20 } });
+
+// Operador $gte - maior ou igual
+db.inventory.find({ qty: { $gte: 20 } });
+
+// Operador $eq - igual
+db.inventory.find({ qty: { $eq: 20 } })
+//Podendo ser realizado desta forma , não existe diferença de performace 
+
+
