@@ -1,0 +1,13 @@
+// Bancos de Dados
+use nomeDoBanco
+db.nomeDaColecao.insertOne( { x: 1 });
+
+// Criando uma coleção
+db.nomeDaColecao1.insertOne({ x: 1 })
+db.nomeDaColecao2.createIndex({ y: 1 })
+
+// Criação explícita
+db.createCollection( "nomeDaColecao", { collation: { locale: "pt" } } );
+
+// MongoDB armazena os dados em um formato chamado BSON (ou Binary JSON )
+// Agora, crie um documento na coleção products , no banco de dados sample , com os seguintes atributos e valores:
