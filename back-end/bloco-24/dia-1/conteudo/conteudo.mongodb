@@ -1,0 +1,60 @@
+// Conteúdos
+/*
+db.colecao.updateOne(<filtro>, <update>, <opcoes>) ;
+db.colecao.updateMany(<filtro>, <update>, <opcoes>) 
+*/
+// Alterando um único documento
+// método updateOne() . Como o nome do método diz, ele altera apenas o primeiro documento que satisfaça o critério de filtro.
+db.inventory.updateOne(
+  { item: "paper" },
+  { $set: { "size.uom": "cm", status: "P" } }
+);
+// operador de atualização $set para alterar o valor do campo size.uom para cm e o valor do campo status para P .
+// Alterando múltiplos documentos
+db.inventory.updateMany(
+  { "qty": { $lt: 50 } },
+  { $set: { "size.uom": "in", status: "P" } }
+);
+// para alterar todos os documentos passar {} no local do filtro
+// Operador $set
+// Se o campo não existir, o operador $set adiciona um novo campo com o valor especificado.
+
+use conteudo_trybe;
+db.products.insertOne({
+  _id: 100,
+  sku: "abc123",
+  quantity: 250,
+  instock: true,
+  reorder: false,
+  details: { model: "14Q2", make: "xyz" },
+  tags: [ "apparel", "clothing" ],
+  ratings: [ { by: "ijk", rating: 4 } ]
+})
+
+// Exemplo 1: Alterando campos no primeiro nível (top-level)
+
+db.products.update(
+  { _id: 100 },
+  { $set: {
+      quantity: 500,
+      details: { model: "14Q3", make: "xyz" },
+      tags: [ "coats", "outerwear", "clothing" ]
+    }
+  }
+);
+
+// Exemplo 2: Alterando campos em documentos embedados
+db.products.update(
+  { _id: 100 },
+  { $set: { "details.make": "zzz" } }
+);
+// Exemplo 3: Alterando valores em arrays
+db.products.update(
+  { _id: 100 },
+  { $set: {
+      "tags.1": "rain gear",
+      "ratings.0.rating": 2
+    }
+  }
+);
+
