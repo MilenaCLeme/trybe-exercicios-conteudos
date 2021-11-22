@@ -1,0 +1,203 @@
+// Conteúdos
+/*
+db.colecao.updateOne(<filtro>, <update>, <opcoes>) ;
+db.colecao.updateMany(<filtro>, <update>, <opcoes>) 
+*/
+// Alterando um único documento
+// método updateOne() . Como o nome do método diz, ele altera apenas o primeiro documento que satisfaça o critério de filtro.
+db.inventory.updateOne(
+  { item: "paper" },
+  { $set: { "size.uom": "cm", status: "P" } }
+);
+// operador de atualização $set para alterar o valor do campo size.uom para cm e o valor do campo status para P .
+// Alterando múltiplos documentos
+db.inventory.updateMany(
+  { "qty": { $lt: 50 } },
+  { $set: { "size.uom": "in", status: "P" } }
+);
+// para alterar todos os documentos passar {} no local do filtro
+// Operador $set
+// Se o campo não existir, o operador $set adiciona um novo campo com o valor especificado.
+
+use conteudo_trybe;
+db.products.insertOne({
+  _id: 100,
+  sku: "abc123",
+  quantity: 250,
+  instock: true,
+  reorder: false,
+  details: { model: "14Q2", make: "xyz" },
+  tags: [ "apparel", "clothing" ],
+  ratings: [ { by: "ijk", rating: 4 } ]
+})
+
+// Exemplo 1: Alterando campos no primeiro nível (top-level)
+
+db.products.update(
+  { _id: 100 },
+  { $set: {
+      quantity: 500,
+      details: { model: "14Q3", make: "xyz" },
+      tags: [ "coats", "outerwear", "clothing" ]
+    }
+  }
+);
+
+// Exemplo 2: Alterando campos em documentos embedados
+db.products.update(
+  { _id: 100 },
+  { $set: { "details.make": "zzz" } }
+);
+// Exemplo 3: Alterando valores em arrays
+db.products.update(
+  { _id: 100 },
+  { $set: {
+      "tags.1": "rain gear",
+      "ratings.0.rating": 2
+    }
+  }
+);
+
+// Operador $mul
+// O operador $mul multiplica o valor de um campo por um número especificado, persistindo o resultado dessa operação 
+use test;
+db.products.insertOne(
+  { "_id": 1, "item": "ABC", "price": NumberDecimal("10.99"), "qty": 25 }
+);
+db.products.update(
+  { _id: 1 },
+  { $mul: { price: NumberDecimal("1.25"), qty: 2 } }
+);
+db.products.find();
+
+// Você pode utilizar o $mul em um campo que não exista no documento.
+db.products.insertOne(
+  { _id: 2, item: "Unknown" }
+);
+db.products.update(
+  { _id: 2 },
+  { $mul: { price: NumberLong("100") } }
+);
+// Você também pode multiplicar valores com tipos diferentes.
+db.products.insertOne(
+  { _id: 3,  item: "XYZ", price: NumberLong("10") }
+);
+db.products.update(
+  { _id: 3 },
+  { $mul: { price: NumberInt(5) } }
+);
+// Resultado { "_id": 3, "item": "XYZ", "price": NumberLong(50) }
+
+// Operador $inc
+// Na operação de update a seguir, o operador $inc é utilizado para decrementar o valor do campo qty em 2 (incrementa em -2 ) e incrementar o valor do campo metrics.orders em 1 :
+db.increment.update(
+  { sku: "abc123" },
+  { $inc: { quantity: -2, "metrics.orders": 1 } }
+);
+// Note que, em uma única chamada ao operador $inc , você consegue aumentar e diminuir os valores de campos diferentes.
+
+// Operadores $min e $max
+/*
+$min : altera o valor do campo atual para o valor passado pelo método se o valor passado pelo método for menor do que o valor do campo atual.
+$max : altera o valor do campo atual para o valor passado pelo método se o valor passado pelo método for maior do que o valor do campo atual.
+*/
+// banco 
+[
+  { _id: 1, campo: 25 },
+  { _id: 2, campo: 50 },
+  { _id: 3, campo: 100 }
+]
+// usando o update 
+db.collection.updateMany({}, { $max: { campo: 75 } });
+// Atualizando todos os valores do atributo "campo"
+// para 75 caso sejam menores
+
+db.collection.find();
+// resultado 
+[
+  { _id: 1, campo: 75 }, // valor anterior: 25
+  { _id: 2, campo: 75 }, // valor anterior: 50
+  { _id: 3, campo: 100 }, // não encontrou no escopo
+]
+
+db.collection.updateMany({}, { $min: { campo: 42 } });
+// Atualizando todos os valores do atributo "campo"
+// para 42 caso sejam maiores
+
+db.collection.find();
+
+[
+  { _id: 1, campo: 42 }, // valor anterior: 75
+  { _id: 2, campo: 42 }, // valor anterior: 75
+  { _id: 3, campo: 42 }, // valor anterior: 100
+]
+
+// Operador $currentDate
+// formado { $currentDate: { <campo>: <typeSpecification>, ... } }
+// inserido 
+use conteudo_trybe;
+db.customers.insertOne(
+  { _id: 1, status: "a", lastModified: ISODate("2013-10-02T01:11:18.965Z") }
+);
+
+db.customers.updateOne(
+  { _id: 1 },
+  { $currentDate: {
+      lastModified: true,
+      "cancellation.date": { $type: "timestamp" }
+    }, $set: {
+      "cancellation.reason": "user request",
+      status: "D"
+    }
+  }
+);
+
+// resultado do banco 
+{
+  "_id": 1,
+  "status": "D",
+  "lastModified": ISODate("2020-01-22T21:21:41.052Z"),
+  "cancellation": {
+    "date": Timestamp(1579728101, 1),
+    "reason": "user request"
+  }
+}
+
+// Renomeando campos com o operador $rename
+ 
+use conteudo_trybe;
+db.fruits.insertOne(
+  { _id: 100, name: "Banana", quantity: 100, inStock: true }
+);
+
+db.fruits.updateOne(
+  { name: "Banana" },
+  { $rename: {
+      "name": "productName"
+    }
+  }
+);
+
+// banco resultado
+{ _id: 100, quantity: 100, inStock: true, productName: 'Banana' }
+
+// Removendo campos com o operador $unset
+
+{
+  _id: 100,
+  productName: "Banana",
+  quantity: 100,
+  inStock: true
+}
+
+db.fruits.updateMany(
+  { productName: "Banana" },
+  { $unset: { quantity: "" } }
+);
+
+// resultado do campo 
+{
+  _id: 100,
+  productName: "Banana",
+  inStock: true
+}

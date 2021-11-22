@@ -1,0 +1,65 @@
+// Bancos de Dados
+use nomeDoBanco
+db.nomeDaColecao.insertOne( { x: 1 });
+
+// Criando uma coleção
+db.nomeDaColecao1.insertOne({ x: 1 })
+db.nomeDaColecao2.createIndex({ y: 1 })
+
+// Criação explícita
+db.createCollection( "nomeDaColecao", { collation: { locale: "pt" } } );
+
+// MongoDB armazena os dados em um formato chamado BSON (ou Binary JSON )
+// Agora, crie um documento na coleção products , no banco de dados sample , com os seguintes atributos e valores:
+use sample;
+db.products.insertOne({ "productName": "Caixa", "price": 20 });
+
+// Agora, assuma o controle do campo _id , passando um valor qualquer para ele e crie um novo documento com os mesmos atributos e valores do documento anterior.
+db.products.insertOne({ _id: 1, "productName": "Caixa", "price": 20 });
+
+// Insira mais três documentos na coleção products em uma única operação:
+db.products.insertMany(
+  [
+    { "productName": "Lapis", "stock": 10, "price": 20, "status": "A" },
+    { "productName": "Tesoura", "price": 5, "status": "B" },
+    { "productName": "Borracha", "price": 15, "status": "A" },
+  ]
+);
+
+// Após inserir documentos em seu banco de dados, você vai querer recuperá-los 
+//  operação: o find() .
+
+// pode retornar o número de documentos de uma coleção com a seguinte operação
+db.products.count();
+
+// Selecionando todos os documentos da coleção
+// mongodb
+db.bios.find()
+// SQL - SELECT * FROM bios;
+
+// Query por igualdadeQuery por igualdade
+// mongodb 
+db.bios.find( { _id: 5 } )
+db.bios.find( { "name.last": "Hopper" } )
+
+//SQL SELECT * FROM bios WHERE _id = 5;
+// Projetando somente os atributos requeridos
+//mongodb 
+db.bios.find({}, { name: 1 })
+
+//SQL SELECT name FROM bios;
+// Limitando o número de documentos retornados
+// mongodb 
+db.bios.find().limit(5)
+
+//SQL SELECT * FROM bios LIMIT 5;
+
+// pretty() - deixa mais bonito a presentação do mongo
+db.bios.find().limit(5).pretty()
+
+// "Pulando" documentos skip
+db.bios.find().skip(2)
+db.bios.find().limit(10).skip(5)
+
+//SQL SELECT * FROM bios LIMIT 10 OFFSET 5;
+

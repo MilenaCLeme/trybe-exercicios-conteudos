@@ -1,0 +1,39 @@
+// adicionar imagem em um container
+docker container run <nome-da-imagem>:<tag>
+
+//containers estão ativos
+docker container ls
+
+//containers inativos e ativos
+docker container ls -a
+
+//Rodando um comando adicional antes de terminar o container
+docker container run <nome-da-imagem>:<tag> <comando> <argumentos-do-comando>
+
+//Rodando o container de forma interativa
+docker container run -ti ubuntu
+
+//O parâmetro --name define um <nome-da-sua-escolha> para aquele container 
+
+//O parâmetro -d (de --detach , desacoplado em português) rodará esse container em segundo plano
+
+docker container create <parâmetros> <imagem>:<tag>
+docker container create -it <imagem>:<tag>
+docker create <parâmetros> <imagem>:<tag>
+
+docker container start <CONTAINER ID || NAMES>
+docker container restart <CONTAINER ID || NAMES>
+docker container pause <CONTAINER ID || NAMES>
+docker container unpause <CONTAINER ID || NAMES>
+docker container stop <CONTAINER ID || NAMES>
+docker <start || restart || pause || unpause || stop> <CONTAINER ID || NAMES>
+docker container attach <CONTAINER ID || NAMES>
+docker attach <CONTAINER ID || NAMES>
+docker container rm <CONTAINER ID || NAMES>
+docker container rm -f <CONTAINER ID || NAMES>
+docker rm <CONTAINER ID || NAMES>
+
+// limpando container
+docker container prune
+
+docker container top <CONTAINER ID || NAMES>

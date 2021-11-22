@@ -1,0 +1,264 @@
+// Operador $push
+// O operador $push adiciona um valor a um array . Se o campo não existir no documento, um novo array com o valor em um elemento será adicionado
+
+//  modificadores
+// $each : Adiciona múltiplos valores a um array ;
+// $slice : Limita o número de elementos do array . Requer o uso do modificador $each
+// $sort : Ordena os elementos do array . Requer o uso do modificador $each 
+// $position : Especifica a posição do elemento que está sendo inserido no array . Também requer o modificador $each . Sem o modificador $position , o operador $push adiciona o elemento no final do array .
+// Exemplo 
+use sales;
+db.supplies.updateOne(
+  { _id: 1 },
+  {
+push: {
+      items: {
+        "name": "notepad",
+        "price":  35.29,
+        "quantity": 2,
+      },
+    },
+  },
+  { upsert: true },
+);
+// resultado 
+{
+    _id : 1,
+    items : [
+        {
+            "name" : "notepad",
+            "price" : 35.29,
+            "quantity" : 2,
+        },
+    ],
+}
+// Adicionando múltiplos valores a um array
+// Exemplo 
+db.supplies.updateOne(
+  {},
+  {
+push: {
+      items: {
+each: [
+          {
+            "name": "pens",
+            "price": 56.12,
+            "quantity": 5,
+          },
+          {
+            "name": "envelopes",
+            "price": 19.95,
+            "quantity": 8,
+          },
+        ],
+      },
+    },
+  },
+  { upsert: true },
+);
+
+//Resultado 
+{
+    _id : 1,
+    items : [
+        {
+            "name" : "notepad",
+            "price" : 35.29,
+            "quantity" : 2,
+        },
+        {
+            "name" : "pens",
+            "price" : 56.12,
+            "quantity" : 5,
+        },
+        {
+            "name" : "envelopes",
+            "price" : 19.95,
+            "quantity" : 8,
+        },
+    ],
+}
+// Múltiplos modificadores
+// EXEMPLO 
+db.supplies.updateOne(
+  { _id: 1 },
+  {
+push: {
+      items: {
+each: [
+          {
+            "name" : "notepad",
+            "price" : 35.29,
+            "quantity" : 2,
+          },
+          {
+            "name": "envelopes",
+            "price": 19.95,
+            "quantity": 8,
+          },
+          {
+            "name": "pens",
+            "price": 56.12,
+            "quantity": 5,
+          },
+        ],
+sort: { quantity: -1 },
+slice: 2,
+      },
+    },
+  },
+  { upsert: true },
+);
+// Resultado 
+{
+  _id : 1,
+  items : [
+    {
+      "name" : "envelopes",
+      "price" : 19.95,
+      "quantity" : 8,
+    },
+    {
+      "name" : "pens",
+      "price" : 56.12,
+      "quantity" : 5,
+    },
+  ],
+}
+
+// Operador $pop
+// 1 , você removerá o último elemento do array e o -1 o primeiro elemento
+// Removendo o primeiro item de um array
+db.supplies.updateOne({ _id: 1 }, { $pop: { items: -1 } });
+
+// Removendo o último item de um array
+db.supplies.updateOne({ _id: 1 }, { $pop: { items: 1 } });
+
+// Operador $pull
+// Removendo todos os itens iguais a um valor especificado
+db.supplies.updateMany(
+  {},
+  {
+pull: {
+      items: {
+        name: { $in: ["pens", "envelopes"] },
+      },
+    },
+  },
+);
+
+// Removendo todos os itens que atendem a uma condição diretamente no $pull
+// Exemplo 
+{ _id: 1, votes: [3, 5, 6, 7, 7, 8] }
+// Query 
+db.profiles.updateOne(
+  { _id: 1 },
+  {
+pull: {
+      votes: { $gte: 6 },
+    },
+  },
+);
+// Resultado 
+{ _id: 1, votes: [3,  5] }
+
+// Removendo itens em um array de Documentos
+// Com a operação abaixo, você consegue remover do array results todos os elementos que contenham o campo score igual a 8 e o campo item igual a "B" . Ou seja, o documento deve atender a ambas as condições.
+db.survey.updateMany(
+  {},
+  {
+pull: {
+      results: { score: 8 , item: "B" },
+    },
+  },
+);
+
+// Operador $addToSet
+// Exemplo 
+{
+  _id: 1,
+  item: "polarizing_filter",
+  tags: ["electronics", "camera"],
+}
+
+// Adicionando ao array
+db.inventory.updateOne(
+  { _id: 1 },
+  { $addToSet: { tags: "accessories" } },
+);
+
+// Resultado 
+{
+  _id: 1,
+  item: "polarizing_filter",
+  tags: [
+    "electronics",
+    "camera",
+    "accessories",
+  ],
+}
+
+// Se o valor existir
+db.inventory.updateOne(
+  { _id: 1 },
+  { $addToSet: { tags: "camera"  } },
+);
+
+// Como resultado dessa operação, é retornada uma mensagem dizendo que o MongoDB encontrou um documento com o _id igual a 1 , mas não fez nenhuma alteração
+
+// Com o modificador $each
+// Exemplo 
+{ _id: 2, item: "cable", tags: ["electronics", "supplies"] }
+
+db.inventory.updateOne(
+  { _id: 2 },
+  {
+addToSet: {
+      tags: {
+each: ["camera", "electronics", "accessories"],
+      },
+    },
+  },
+);
+
+//Resultado
+{
+  _id: 2,
+  item: "cable",
+  tags: ["electronics", "supplies", "camera", "accessories"],
+}
+
+// Array Filters
+
+db.recipes.updateOne( { title: "Panqueca Simples" }, { $set: { "ingredients.1.unit": "xícara" } } );
+
+db.recipes.updateOne(
+  { title: "Panqueca Simples" },
+  {
+set : {
+      "ingredients.$[elemento].name": "Farinha Integral",
+    },
+  },
+  { arrayFilters: [ { "elemento.name": "Farinha" } ] },
+);
+
+db.recipes.updateOne(
+  { title: "Panqueca Simples" },
+  {
+set : {
+      "ingredients.$[elemento].unit": "xícara",
+    },
+  },
+  { arrayFilters: [ { "elemento.name": "Farinha Integral" } ] },
+);
+
+db.recipes.updateMany( // Passamos de updateOne para updateMany.
+  {}, // Retiramos a restrição do título.
+  {
+set : {
+      "ingredients.$[elemento].unit": "xícara", // Setamos `unit` como "xícara",
+      "ingredients.$[elemento].name": "Farinha Integral", // `name` como "Farinha Integral".
+    },
+  },
+  { arrayFilters: [ { "elemento.name": "Farinha" } ] }, // Filtramos os arrays que o valor da propriedade `name` seja "Farinha".
+);
