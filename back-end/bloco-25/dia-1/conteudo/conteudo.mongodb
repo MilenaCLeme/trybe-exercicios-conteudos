@@ -6,3 +6,224 @@ db.orders.aggregate([
 ]);
 
 // Operador $match
+
+// Exemplo 1: Igualdade simples
+db.articles.aggregate(
+  [{ $match : { author : "dave" } }]
+);
+
+// Exemplo 2: Igualdade complexa
+db.articles.aggregate(
+  [
+    {
+match: {
+or: [
+          { score: { $gt: 70, $lt: 90 } },
+          { views: { $gte: 1000 } }
+        ]
+      }
+    }
+  ]
+);
+
+//Operador $limit
+
+db.articles.aggregate(
+  [
+    { $limit : 5 }
+  ]
+);
+
+// Essa operação retorna apenas 5 documentos.
+
+// Para Fixar
+
+use agg_example;
+db.transactions.insertMany([
+  { value: 5900, from: "Dave America", to: "Ned Flanders", bank: 'International' },
+  { value: 1000, from: "Mark Zuck", to: "Edna Krabappel", bank: 'FloridaBank' },
+  { value: 209, from: "Lisa Simpson", to: "Dave America", bank: 'bankOfAmerica' },
+  { value: 10800, from: "Arnold Schuz", to: "Mark Zuck", bank: 'JPMorgan' },
+  { value: 850, from: "Barney Gumble", to: "Lisa Simpson", bank: 'Citigroup' },
+  { value: 76000, from: "Ned Flanders", to: "Edna Krabappel", bank: 'JPMorgan' },
+  { value: 1280, from: "Dave America", to: "Homer Simpson", bank: 'Citigroup' },
+  { value: 7000, from: "Arnold Schuz", to: "Ned Flanders", bank: 'International' },
+  { value: 59020, from: "Homer Simpson", to: "Lisa Simpson", bank: 'International' },
+  { value: 100, from: "Mark Zuck", to: "Barney Gumble", bank: 'FloridaBank' },
+]);
+
+// Selecione todas as transações feitas pelo cliente chamado "Dave America".
+db.transactions.aggregate([{$match: {from: "Dave America"}}]);
+
+// Selecione todas as transações com o valor entre 700 e 6000, ou que sejam recebidas pela cliente "Lisa Simpson"
+db.transactions.aggregate([{$match: {$and: [{value: {$gt: 700, $lt: 6000}}, {to: "Lisa Simpson"}]}}])
+
+// Selecione três transações com o valor acima de 1000.
+db.transactions.aggregate([{$match: {value: {$gt: 1000}}}, {$limit: 3}]);
+
+// Operador $project
+
+// Exemplo 1: Incluindo campos específicos
+
+db.books.aggregate(
+  [
+    {
+project : {
+        title : 1,
+        author : 1
+      }
+    }
+  ]
+);
+
+// Exemplo 2: Excluindo o campo _id
+
+db.books.aggregate([
+  {
+project : {
+      _id: 0,
+      title : 1,
+      author : 1
+    }
+  }
+]);
+
+// Exemplo 3: Excluindo outros campos
+
+db.books.aggregate([
+  {
+project : {
+      copies: 0
+    }
+  }
+]);
+
+// Exemplo 4: Excluindo campos em subdocumentos
+db.books.aggregate([
+  {
+project : {
+      "author.first": 0,
+      copies: 0
+    }
+  }
+]);
+
+// Exemplo 5: Incluindo campos calculados
+
+db.books.aggregate([
+  {
+project: {
+      title: 1,
+      isbn: {
+        prefix: { $substr: ["$isbn", 0, 3] },
+        group: { $substr: ["$isbn", 3, 2] },
+        publisher: { $substr: ["$isbn", 5, 4] },
+        title: { $substr: ["$isbn", 9, 3] },
+        checkDigit: { $substr: ["$isbn", 12, 1] }
+      },
+      lastName: "$author.last",
+      copiesSold: "$copies"
+    }
+  }
+]);
+
+// Operador $group
+
+// Exemplo 1: Contando o número de documentos
+
+db.sales.aggregate([
+  {
+group: {
+      _id: null,
+      count: { $sum: 1 }
+    }
+  }
+]);
+
+// Exemplo 2: Retornando valores distintos
+
+db.sales.aggregate([
+  {
+group : {
+      _id : "$item",
+      count: { $sum: 1}
+    }
+  }
+]);
+
+// Exemplo 3: Somando valores
+
+db.sales.aggregate([
+  {
+group : {
+      _id : "$item",
+      totalSaleAmount: {
+sum: {
+multiply: ["$price", "$quantity"]
+        }
+      }
+    }
+  }
+]);
+
+// Exemplo 4: Having (do Mysql), combinando estágios no aggregate
+
+db.sales.aggregate([
+  // Primeiro Estágio
+  {
+group: {
+      _id : "$item",
+      totalSaleAmount: {
+sum: {
+multiply: ["$price", "$quantity"]
+        }
+      }
+    }
+  },
+  // Segundo Estágio
+  {
+match: { "totalSaleAmount": { $gte: 100 } }
+  }
+]);
+
+// Exemplo 5: Agrupando por null
+
+db.sales.aggregate([
+  {
+group : {
+      _id : null,
+      totalSaleAmount: {
+sum: { $multiply: ["$price", "$quantity"] }
+      },
+      averageQuantity: { $avg: "$quantity" },
+      count: { $sum: 1 }
+    }
+  }
+]);
+
+// Para Fixar
+// Selecione todos os bancos, ou seja, valores do campo bank ;
+db.transactions.aggregate([{$group: { _id : "$bank", bank: { $sum: 1}}}]);
+
+// Selecione o valor total das transações em cada banco e quantas são;
+db.transactions.aggregate([$group: {_id: "$bank", bank: {$sum: 1}, value: {$sum: "$value"}}]);
+
+
+
+// Operador $unwind
+
+db.inventory.aggregate([{ $unwind : "$sizes" }]);
+
+// Operador $lookup
+db.orders.aggregate([
+  {
+lookup: {
+      from: "inventory",
+      localField: "item",
+      foreignField: "sku",
+      as: "inventory_docs"
+    }
+  }
+]);
+
+// Para Fixar
