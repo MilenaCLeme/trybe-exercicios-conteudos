@@ -56,7 +56,7 @@ db.transactions.insertMany([
 db.transactions.aggregate([{$match: {from: "Dave America"}}]);
 
 // Selecione todas as transações com o valor entre 700 e 6000, ou que sejam recebidas pela cliente "Lisa Simpson"
-db.transactions.aggregate([{$match: {$and: [{value: {$gt: 700, $lt: 6000}}, {to: "Lisa Simpson"}]}}])
+db.transactions.aggregate([{$match: {$or: [{value: {$gt: 700, $lt: 6000}}, {to: "Lisa Simpson"}]}}])
 
 // Selecione três transações com o valor acima de 1000.
 db.transactions.aggregate([{$match: {value: {$gt: 1000}}}, {$limit: 3}]);
@@ -206,12 +206,15 @@ sum: { $multiply: ["$price", "$quantity"] }
 db.transactions.aggregate([{$group: { _id : "$bank", bank: { $sum: 1}}}]);
 
 // Selecione o valor total das transações em cada banco e quantas são;
-db.transactions.aggregate([$group: {_id: "$bank", bank: {$sum: 1}, value: {$sum: "$value"}}]);
+db.transactions.aggregate([{}]);
 
+// Selecione o valor total de transações por banco;
+db.transactions.aggregate([$group: {_id: "$bank", value: {$sum: 1}}]);
 
+// Selecione os bancos que têm o valor total de transações maior que 1000.
+db.transactions.aggregate([{$match: {value: {$gt: 1000}}}, {$group: {_id: "$bank", value: {$sum: 1}}}]);
 
 // Operador $unwind
-
 db.inventory.aggregate([{ $unwind : "$sizes" }]);
 
 // Operador $lookup
@@ -227,3 +230,15 @@ lookup: {
 ]);
 
 // Para Fixar
+
+use agg_example;
+db.clients.insertMany([
+  { name: "Dave America", State: "Florida" },
+  { name: "Ned Flanders", State: "Alasca" },
+  { name: "Mark Zuck", State: "Texas" },
+  { name: "Edna Krabappel", State: "Montana" },
+  { name: "Arnold Schuz", State: "California" },
+  { name: "Lisa Simpson", State: "Florida" },
+  { name: "Barney Gumble", State: "Texas" },
+  { name: "Homer Simpson", State: "Florida" },
+]);
