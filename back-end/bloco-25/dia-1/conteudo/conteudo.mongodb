@@ -206,13 +206,13 @@ sum: { $multiply: ["$price", "$quantity"] }
 db.transactions.aggregate([{$group: { _id : "$bank", bank: { $sum: 1}}}]);
 
 // Selecione o valor total das transações em cada banco e quantas são;
-db.transactions.aggregate([{}]);
+db.transactions.aggregate([{$group: {_id: "$bank", total: {$sum: "$value"}, transações: {$sum: 1}}}]);
 
 // Selecione o valor total de transações por banco;
-db.transactions.aggregate([$group: {_id: "$bank", value: {$sum: 1}}]);
+db.transactions.aggregate([{$group: {_id: "$bank", total: {$sum: "$value"}}}]);
 
 // Selecione os bancos que têm o valor total de transações maior que 1000.
-db.transactions.aggregate([{$match: {value: {$gt: 1000}}}, {$group: {_id: "$bank", value: {$sum: 1}}}]);
+db.transactions.aggregate([{$group: {_id: "$bank", total: {$sum: "$value"}}}, {$match: {"total": {$gt: 1000}}}]);
 
 // Operador $unwind
 db.inventory.aggregate([{ $unwind : "$sizes" }]);
