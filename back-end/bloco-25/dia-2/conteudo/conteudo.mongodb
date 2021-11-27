@@ -1,0 +1,579 @@
+// Aplicando condições ao Join com $lookup
+
+// Exemplo:
+use example_db;
+db.orders.insertMany([
+  { _id: 1, item: "almonds", price: 12, ordered: 2 },
+  { _id: 2, item: "pecans", price: 20, ordered: 1 },
+  { _id: 3, item: "cookies", price: 10, ordered: 60 }
+]);
+
+use example_db;
+db.warehouses.insertMany([
+  { _id: 1, stock_item: "almonds", warehouse: "A", instock: 120 },
+  { _id: 2, stock_item: "pecans", warehouse: "A", instock: 80 },
+  { _id: 3, stock_item: "almonds", warehouse: "B", instock: 60 },
+  { _id: 4, stock_item: "cookies", warehouse: "B", instock: 40 },
+  { _id: 5, stock_item: "cookies", warehouse: "A", instock: 80 }
+]);
+
+// executo 
+
+db.orders.aggregate([
+  {
+lookup: {
+      from: "warehouses",
+      let: { order_item: "$item", order_qty: "$ordered" },
+      pipeline: [
+        {
+match: {
+expr: {
+and: [
+                { $eq: [ "$stock_item",  "$$order_item" ] },
+                { $gte: [ "$instock", "$$order_qty" ] }
+              ]
+            }
+          }
+        },
+        { $project: { stock_item: 0, _id: 0 } }
+      ],
+      as: "stockdata"
+    }
+  }
+]);
+
+{
+  "_id" : 1,
+  "item" : "almonds",
+  "price" : 12,
+  "ordered" : 2,
+  "stockdata" : [
+    {
+      "warehouse" : "A",
+      "instock" : 120
+    },
+    {
+      "warehouse" : "B",
+      "instock" : 60
+    }
+  ]
+}
+{
+  "_id" : 2,
+  "item" : "pecans",
+  "price" : 20,
+  "ordered" : 1,
+  "stockdata" : [
+    {
+      "warehouse" : "A",
+      "instock" : 80
+    }
+  ]
+}
+{
+  "_id" : 3,
+  "item" : "cookies",
+  "price" : 10,
+  "ordered" : 60,
+  "stockdata" : [
+    {
+      "warehouse" : "A",
+      "instock" : 80
+    }
+  ]
+}
+
+// Para Fixar 
+use test;
+db.clients.insertMany([
+  { name: "Dave America", State: "Florida" },
+  { name: "Ned Flanders", State: "Alasca" },
+  { name: "Mark Zuck", State: "Texas" },
+  { name: "Edna Krabappel", State: "Montana" },
+  { name: "Arnold Schuz", State: "California" },
+  { name: "Lisa Simpson", State: "Florida" },
+  { name: "Barney Gumble", State: "Texas" },
+  { name: "Homer Simpson", State: "Florida" },
+]);
+
+db.transactions.insertMany([
+  { value: 5900, from: "Dave America", to: "Ned Flanders", bank: 'International' },
+  { value: 1000, from: "Mark Zuck", to: "Edna Krabappel", bank: 'FloridaBank' },
+  { value: 209, from: "Lisa Simpson", to: "Dave America", bank: 'bankOfAmerica' },
+  { value: 10800, from: "Arnold Schuz", to: "Mark Zuck", bank: 'JPMorgan' },
+  { value: 850, from: "Barney Gumble", to: "Lisa Simpson", bank: 'Citigroup' },
+  { value: 76000, from: "Ned Flanders", to: "Edna Krabappel", bank: 'JPMorgan' },
+  { value: 1280, from: "Dave America", to: "Homer Simpson", bank: 'Citigroup' },
+  { value: 7000, from: "Arnold Schuz", to: "Ned Flanders", bank: 'International' },
+  { value: 59020, from: "Homer Simpson", to: "Lisa Simpson", bank: 'International' },
+  { value: 100, from: "Mark Zuck", to: "Barney Gumble", bank: 'FloridaBank' },
+]);
+
+// Selecione todos os clientes com as suas respectivas transações feitas;
+
+db.clients.aggregate([
+  {
+    $lookup: {
+      from: "transactions",
+      let: { nome: "$name" },
+      pipeline: [
+        {
+          $match: {
+            $expr: {
+              $and: [
+                {$eq: ["$from", "$$nome"]}
+              ]
+            }
+          }
+        }
+      ],
+      as: "transações_feitas"
+    }
+  }
+]);
+
+// Selecione os quatro primeiros clientes com as suas respectivas transações recebidas ordenados pelo estado em ordem alfabética;
+
+db.clients.aggregate([
+  {
+    $lookup: {
+      from: "transactions",
+      let: { nome: "$name" },
+      pipeline: [
+        {
+          $match: {
+            $expr: {
+              $and: [
+                {$eq: ["$from", "$$nome"]}
+              ]
+            }
+          }
+        }
+      ],
+      as: "transações_feitas"
+    }
+  },
+  {
+    $limit: 4
+  },
+  {
+    $sort: { State: 1 }
+  }
+]);
+
+// Selecione todos os cliente do estado da "Florida" e suas respectivas transações recebidas.
+
+db.clients.aggregate([
+  {
+    $lookup: {
+      from: "transactions",
+      let: { nome: "$name" },
+      pipeline: [
+        {
+          $match: {
+            $expr: {
+              $and: [
+                {$eq: ["$from", "$$nome"]}
+              ]
+            }
+          }
+        }
+      ],
+      as: "transações_feitas"
+    }
+  },
+  {
+    $match: {
+      State: "Florida"
+    }
+  }
+]);
+
+// Expressão $add
+
+//para ser usado do project é usadas em numeros e datas para somar 
+
+{ _id: 1, item: "abc", price: 10, fee: 2, date: ISODate("2014-03-01T08:00:00Z") },
+{ _id: 2, item: "jkl", price: 20, fee: 1, date: ISODate("2014-03-01T09:00:00Z") },
+{ _id: 3, item: "xyz", price: 5,  fee: 0, date: ISODate("2014-03-15T09:00:00Z") }
+
+db.sales.aggregate([
+  { $project: { item: 1, total: { $add: ["$price", "$fee"] } } }
+]);
+
+{ "_id" : 1, "item" : "abc", "total" : 12 }
+{ "_id" : 2, "item" : "jkl", "total" : 21 }
+{ "_id" : 3, "item" : "xyz", "total" : 5 }
+
+// PARA FIXAR :
+
+db.products.insertMany([
+  { "name": "Ball", "purchase_price": 7.6, "taxes": 1.9, "sale_price": 12.5, "quantity": 5 },
+  { "name": "Baseball bat", "purchase_price": 18.5, "taxes": 5.3, "sale_price": 39.9, "quantity": 12 },
+  { "name": "Sneakers", "purchase_price": 10.4, "taxes": 1.50, "sale_price": 14.9, "quantity": 3 },
+  { "name": "Gloves", "purchase_price": 2.85, "taxes": 0.90, "sale_price": 5.70, "quantity": 34 },
+  { "name": "Jacket", "purchase_price": 28.9, "taxes": 10.80, "sale_price": 59.9, "quantity": 20 },
+  { "name": "Mousepad", "purchase_price": 16.6, "taxes": 3.40, "sale_price": 29.9, "quantity": 8 },
+  { "name": "Monitor", "purchase_price": 119.9, "taxes": 39.20, "sale_price": 240.6, "quantity": 11 },
+]);
+
+// Calcule qual o custo total de cada produto, considerando o preço de compra e os impostos.
+db.products.aggregate([
+  {
+    $project: {
+      name: 1,
+      total_produto: {
+        $add: ["$purchase_price", "$taxes"]
+      }
+    }
+  }
+]);
+
+// Expressão $subtract
+
+// Exemplo
+
+{
+  _id: 1,
+  item: "abc",
+  price: 10,
+  fee: 2,
+  discount: 5,
+  date: ISODate("2014-03-01T08:00:00Z")
+},
+{
+  _id: 2,
+  item: "jkl",
+  price: 20,
+  fee: 1,
+  discount: 2,
+  date: ISODate("2014-03-01T09:00:00Z")
+}
+
+db.sales.aggregate([
+  {
+project: {
+      item: 1,
+      total: {
+subtract: [
+          { $add: ["$price", "$fee"] },
+          "$discount"
+        ]
+      }
+    }
+  }
+]);
+
+{ "_id" : 1, "item" : "abc", "total" : 7 }
+{ "_id" : 2, "item" : "jkl", "total" : 19 }
+
+// Subtrair data também 
+
+db.sales.aggregate([
+  {
+project: {
+      item: 1,
+      dateDifference: {
+subtract: ["$$NOW", "$date"]
+      }
+    }
+  }
+]);
+
+// Para Fixar
+
+// Calcule qual o lucro total de cada produto, considerando o preço de compra, os impostos e seu valor de venda.
+db.products.aggregate([
+  {
+    $project: {
+      name: 1,
+      total_produto: {
+        $subtract: [
+          "$sale_price",
+          { $add: ["$purchase_price", "$taxes"] },
+        ]
+      } 
+    }
+  }
+]);
+
+// Expressão $ceil
+// $ceil basicamente arredonda o número especificado para "cima".
+
+// Exemplo 
+{ _id: 1, value: 9.25 },
+{ _id: 2, value: 8.73 },
+{ _id: 3, value: 4.32 },
+{ _id: 4, value: -5.34 }
+
+db.samples.aggregate([
+  { $project: { value: 1, ceilingValue: { $ceil: "$value" } } }
+]);
+
+{ "_id" : 1, "value" : 9.25, "ceilingValue" : 10 }
+{ "_id" : 2, "value" : 8.73, "ceilingValue" : 9 }
+{ "_id" : 3, "value" : 4.32, "ceilingValue" : 5 }
+{ "_id" : 4, "value" : -5.34, "ceilingValue" : -5 }
+
+// Expressão $floor
+// basicamente arredonda o número especificado para "baixo".
+
+db.samples.aggregate([
+  { $project: { value: 1, floorValue: { $floor: "$value" } } }
+]);
+
+{ "_id" : 1, "value" : 9.25, "floorValue" : 9 }
+{ "_id" : 2, "value" : 8.73, "floorValue" : 8 }
+{ "_id" : 3, "value" : 4.32, "floorValue" : 4 }
+{ "_id" : 4, "value" : -5.34, "floorValue" : -6 }
+
+// Expressão $round
+// A expressão $round retorna o número inteiro mais próximo do valor atual e também permite definir a quantidade de casas decimais que você quer manter ao arredondar.
+
+db.samples.aggregate([
+  { $project: { value: 1, roundedValue: { $round: ["$value"] } } }
+]);
+
+{ "_id" : 1, "value" : 9.25, "roundedValue" : 9 }
+{ "_id" : 2, "value" : 8.73, "roundedValue" : 9 }
+{ "_id" : 3, "value" : 4.32, "roundedValue" : 4 }
+{ "_id" : 4, "value" : -5.34, "roundedValue" : -5 }
+
+// total de casa 
+
+db.samples.aggregate([
+  { $project: { value: 1, roundedValue: { $round: ["$value", 1] } } }
+]);
+
+{ "_id" : 1, "value" : 9.25, "roundedValue" : 9.2 }
+{ "_id" : 2, "value" : 8.73, "roundedValue" : 8.7 }
+{ "_id" : 3, "value" : 4.32, "roundedValue" : 4.3 }
+{ "_id" : 4, "value" : -5.34, "roundedValue" : -5.3 }
+
+// Para fixar 
+
+// Retorne o menor número inteiro relativo ao preço de venda de cada produto;
+db.products.aggregate([
+  {
+    $project: {
+      name: 1,
+      preco_de_venda: {
+        $round: ["$sale_price"]
+      } 
+    }
+  }
+]);
+
+// Retorne o maior número inteiro relativo ao lucro total sobre cada produto. Nota: Desconsiderar taxas (taxes)
+db.products.aggregate([
+  {
+    $project: {
+      name: 1,
+      total_produto: {
+        $subtract: [
+          "$sale_price",
+          "$purchase_price",
+        ]
+      } 
+    }
+  },
+  {
+    $project: {
+      name: 1,
+      total_produto: {
+        $round: ["$total_produto"]
+      }
+    }
+  }
+]);
+
+// Expressão $abs
+
+// A expressão $abs retorna o valor absoluto de um número.
+
+// Exemplo
+
+{ _id: 1, start: 5, end: 8 },
+{ _id: 2, start: 4, end: 4 },
+{ _id: 3, start: 9, end: 7 },
+{ _id: 4, start: 6, end: 7 }
+
+db.ratings.aggregate([
+  {
+project: {
+      delta: {
+abs: { $subtract: ["$start", "$end"] }
+      }
+    }
+  }
+]);
+
+{ "_id" : 1, "delta" : 3 }
+{ "_id" : 2, "delta" : 0 }
+{ "_id" : 3, "delta" : 2 }
+{ "_id" : 4, "delta" : 1 }
+
+// Para Fixar 
+
+// Calcule o valor absoluto do lucro total de cada produto.
+db.products.aggregate([
+  {
+    $project: {
+      name: 1,
+      abs_total_lucro: {
+        abs: {
+          $subtract: [
+            "$sale_price",
+            { $add: ["$purchase_price", "$taxes"] }
+          ]
+        }
+      } 
+    }
+  }
+]);
+
+// Expressão $multiply
+
+// A expressão $multiply multiplica dois valores numéricos
+
+{ _id: 1, item: "abc", price: 10, quantity: 2, date: ISODate("2014-03-01T08:00:00Z") },
+{ _id: 2, item: "jkl", price: 20, quantity: 1, date: ISODate("2014-03-01T09:00:00Z") },
+{ _id: 3, item: "xyz", price: 5, quantity: 10, date: ISODate("2014-03-15T09:00:00Z") }
+
+
+db.sales.aggregate([
+  {
+project: {
+      date: 1,
+      item: 1,
+      total: {
+multiply: ["$price", "$quantity"]
+      }
+    }
+  }
+]);
+
+{ "_id" : 1, "item" : "abc", "date" : ISODate("2014-03-01T08:00:00Z"), "total" : 20 }
+{ "_id" : 2, "item" : "jkl", "date" : ISODate("2014-03-01T09:00:00Z"), "total" : 20 }
+{ "_id" : 3, "item" : "xyz", "date" : ISODate("2014-03-15T09:00:00Z"), "total" : 50 }
+
+// Para Fixar 
+
+// Calcule qual o valor total em estoque de cada produto, considerando o preço de venda e a quantidade;
+db.products.aggregate([
+  {
+    $project: {
+      name: 1,
+      total_preco_estoque: {
+        $multiply: ["$sale_price", "$quantity"]
+      }
+    }
+  }
+]);
+
+// Calcule qual será o lucro total de cada produto caso todo o estoque seja vendido.
+db.products.aggregate([
+  {
+    $project: {
+      name: 1,
+      total_preco_estoque: {
+        $multiply: ["$purchase_price", "$quantity"]
+      }
+    }
+  }
+]);
+
+// Expressão $divide
+// A expressão $divide , como o próprio nome sugere, divide dois valores.
+
+// Exemplo 
+
+{ _id: 1, name: "A", hours: 80, resources: 7 },
+{ _id: 2, name: "B", hours: 40, resources: 4 }
+
+db.planning.aggregate([
+  {
+project: {
+      name: 1,
+      workdays: {
+divide: ["$hours", 8]
+      }
+    }
+  }
+]);
+
+{ "_id" : 1, "name" : "A", "workdays" : 10 }
+{ "_id" : 2, "name" : "B", "workdays" : 5 }
+
+// Fixar 
+
+//Calcule qual será o preço de venda de cada produto caso haja uma promoção de 50% de desconto.
+db.products.aggregate([
+  {
+    $project: {
+      name: 1,
+      total_com_Desconto: {
+        $multiply: [
+          {$divide: [100, 50]},
+          "$purchase_price"
+        ]
+      }
+    }
+  }
+]);
+
+// Estágio $addFields
+
+// exemplo 
+
+{
+  _id: 1,
+  student: "Maya",
+  homework: [10, 5, 10],
+  quiz: [10, 8],
+  extraCredit: 0
+},
+{
+  _id: 2,
+  student: "Ryan",
+  homework: [5, 6, 5],
+  quiz: [8, 8],
+  extraCredit: 8
+}
+
+db.scores.aggregate([
+  {
+addFields: {
+      totalHomework: { $sum: "$homework" } ,
+      totalQuiz: { $sum: "$quiz" }
+    }
+  },
+  {
+addFields: {
+      totalScore: {
+add: [ "$totalHomework", "$totalQuiz", "$extraCredit" ]
+      }
+    }
+  }
+]);
+
+{
+  "_id" : 1,
+  "student" : "Maya",
+  "homework" : [ 10, 5, 10 ],
+  "quiz" : [ 10, 8 ],
+  "extraCredit" : 0,
+  "totalHomework" : 25,
+  "totalQuiz" : 18,
+  "totalScore" : 43
+}
+{
+  "_id" : 2,
+  "student" : "Ryan",
+  "homework" : [ 5, 6, 5 ],
+  "quiz" : [ 8, 8 ],
+  "extraCredit" : 8,
+  "totalHomework" : 16,
+  "totalQuiz" : 16,
+  "totalScore" : 40
+}
