@@ -38,4 +38,5 @@ module.exports = {
   getAll,
   getByBookId,
   isValid,
+  crear,
 };
