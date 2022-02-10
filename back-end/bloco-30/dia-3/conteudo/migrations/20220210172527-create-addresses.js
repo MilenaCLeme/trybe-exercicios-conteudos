@@ -2,31 +2,40 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Employees', {
+    return queryInterface.createTable('Addresses', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      firstName: {
+      city: {
         allowNull: false,
         type: Sequelize.STRING,
-        field: 'first_name',
       },
-      lastName: {
+      street: {
         allowNull: false,
         type: Sequelize.STRING,
-        field: 'last_name',
       },
-      age: {
+      number: {
         allowNull: false,
         type: Sequelize.INTEGER,
+      },
+      employeeId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+        field: 'employee_id',
+        references: {
+          model: 'Employees',
+          key: 'id',
+        },
       },
     });
   },
 
   down: async (queryInterface, _Sequelize) => {
-    return queryInterface.dropTable('Employees');
+    return queryInterface.dropTable('Addresses');
   },
 };
