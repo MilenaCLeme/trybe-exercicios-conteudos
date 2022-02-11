@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "trybe",
+    "password": "Milena@441",
+    "database": "associations",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "trybe",
+    "password": "Milena@441",
+    "database": "associations",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "trybe",
+    "password": "Milena@441",
+    "database": "associations",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  }
+}

@@ -1,0 +1,94 @@
+// Operador $all
+
+db.inventory.find({ tags: { $all: ["red", "blank"] } });
+//  independentemente da existência de outros valores ou a ordem em que os elementos estejam.
+
+// Operador $elemMatch
+// exemplo 
+{ _id: 1, results: [82, 85, 88] },
+{ _id: 2, results: [75, 88, 89] }
+
+db.scores.find(
+  { results: { $elemMatch: { $gte: 80, $lt: 85 } } }
+);
+
+// Operador $size
+// contêm exatamente 2 elementos
+db.products.find(
+  { tags: { $size: 2 } }
+);
+
+// Operador $where
+
+// Operador $expr
+// Exemplo 
+{ _id: 1, category: "food", budget: 400, spent: 450 },
+{ _id: 2, category: "drinks", budget: 100, spent: 150 },
+{ _id: 3, category: "clothes", budget: 100, spent: 50 },
+{ _id: 4, category: "misc", budget: 500, spent: 300 },
+{ _id: 5, category: "travel", budget: 200, spent: 650 }
+
+db.monthlyBudget.find(
+  {
+expr: { $gt: [ "$spent", "$budget" ] }
+  }
+);
+
+// Resultados 
+{ "_id" : 1, "category" : "food", "budget" : 400, "spent" : 450 }
+{ "_id" : 2, "category" : "drinks", "budget" : 100, "spent" : 150 }
+{ "_id" : 5, "category" : "travel", "budget" : 200, "spent" : 650 }
+
+// Operador $regex
+// Um uso muito comum para o operador $regex é fazer consultas como o LIKE do SQL
+// Exemplo 
+
+{ _id: 100, sku: "abc123", description: "Single line description." },
+{ _id: 101, sku: "abc789", description: "First line\nSecond line" },
+{ _id: 102, sku: "xyz456", description: "Many spaces before     line" },
+{ _id: 103, sku: "xyz789", description: "Multiple\nline description" }
+
+db.products.find({ sku: { $regex: /789$/ } });
+
+//SQL - SELECT * FROM products WHERE sku LIKE "%789";
+
+db.products.find({ sku: { $regex: /^ABC/i } });
+
+// RESULTADO 
+{ "_id" : 100, "sku" : "abc123", "description" : "Single line description." }
+{ "_id" : 101, "sku" : "abc789", "description" : "First line\nSecond line" }
+
+// Operador $text
+
+{
+text:
+    {
+search: <string>,
+language: <string>,
+caseSensitive: <boolean>,
+diacriticSensitive: <boolean>
+    }
+}
+
+// Exemplo 1: Procurando um único termo
+
+db.articles.find({ $text: { $search: "coffee" } });
+
+// Exemplo 2: Procurando qualquer um dos termos especificados
+
+db.articles.find({ $text: { $search: "bake coffee cake" } });
+
+// Exemplo 3: Procurando por uma frase
+
+db.articles.find({ $text: { $search: "\"coffee shop\"" } });
+
+// Operador $mod
+
+{ _id: 1, item: "abc123", qty: 0 },
+{ _id: 2, item: "xyz123", qty: 5 },
+{ _id: 3, item: "ijk123", qty: 12 }
+
+db.inventory.find({ qty: { $mod: [4, 0] } });
+
+{ "_id" : 1, "item" : "abc123", "qty" : 0 }
+{ "_id" : 3, "item" : "ijk123", "qty" : 12 }

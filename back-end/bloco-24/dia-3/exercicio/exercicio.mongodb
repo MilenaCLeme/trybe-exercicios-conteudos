@@ -1,0 +1,66 @@
+// Banco 
+
+db.movies.drop();
+db.movies.insertMany([
+  {
+    title: "Batman",
+    category: [
+      "action",
+      "adventure"
+    ],
+    imdbRating: 7.7,
+    budget: 35
+  },
+  {
+    title: "Godzilla",
+    category: [
+      "action",
+      "adventure",
+      "sci-fi"
+    ],
+    imdbRating: 6.6,
+    budget: 10
+  },
+  {
+    title: "Home Alone",
+    category: [
+      "family",
+      "comedy"
+    ],
+    imdbRating: 7.4
+  }
+]);
+
+// Exercicio 1 - Utilizando o operador $all , retorne todos os filmes que contenham action e adventure no array category .
+db.movies.find({category: {$all: ["action", "adventure"]}});
+
+// Exercicio 2 - Agora retorne os filmes que contenham action no array category e possuem nota do IMDB maior do que 7 .
+db.movies.find({$and: [{category: {$all: ["action"]}}, {imdbRating: {$gt: 7}}]});
+
+// Exercicio 3 - Adicione um array chamado ratings ao filme Batman com os seguintes valores: [85, 100, 102, 105] . Dica: lembre-se do operador $each visto no dia anterior.
+db.movies.updateOne({title: "Batman"}, {$push: {$each: {ratings: [85, 100, 102, 105] }}});
+
+// Exercicio 4 - Adicione um array chamado ratings ao filme Godzilla com os seguintes valores: [78, 52, 95, 102] 
+db.movies.updateOne({title: "Godzilla"}, {$push: {$each: {ratings: [78, 52, 95, 102]}}});
+
+// Exercicio 5 - Adicione um array chamado ratings ao filme Home Alone com os seguintes valores: [200, 99, 65] .
+db.movies.updateOne({title: "Home Alone"}, {$push: {$each: {ratings: [200, 99, 65]}}});
+
+// Exercicio 6 - Retorne todos os filmes com ratings maior do que 103 , exibindo apenas os campos title e ratings 
+db.movies.find({ratings: {$elemMatch: {$gt: 103}}}, {_id: 0, title: 1, ratings: 1});
+
+// Exercicio 7 - Retorne todos os filmes com ratings entre 100 e 105 , exibindo apenas os campos title e ratings .
+db.movies.find({ratings: {$elemMatch: {$lt: 100, $gt:}}, {_id: 0, title: 1, ratings: 1});
+
+// Exercicio 8 - Retorne todos os filmes com ratings entre 64 e 105 e divisíveis por 9 , exibindo apenas os campos title e ratings .
+
+// Exercicio 9 - Retorne os filmes da categoria adventure e com ratings maior do que 103 , exibindo apenas os campos title , ratings e category .
+
+// Exercicio 10 - Retorne somente o título de todos os filmes com dois elementos no array category .
+db.movies.find({ratings: {$size: 2 }});
+
+// Exercicio 11 - Retorne somente o título de todos os filmes com quatro elementos no array ratings .
+db.movies.find({ratings: {$size: 4}});
+
+// Exercicio 12 - Busque os filmes em que o módulo 5 do campo budget seja 0 e que o array category tenha tamanho 2 .
+
