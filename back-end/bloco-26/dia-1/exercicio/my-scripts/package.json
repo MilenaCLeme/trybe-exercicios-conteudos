@@ -7,7 +7,9 @@
     "start": "node index",
     "imc": "node imc.js",
     "velocidade": "node velocidade.js",
-    "sorteio": "node sorteio.js"
+    "sorteio": "node sorteio.js",
+    "fatorial": "node fatorial.js",
+    "fibonacci": "node fibonacci.js"
   },
   "author": "Milena Chrysostomo Leme",
   "license": "ISC",
