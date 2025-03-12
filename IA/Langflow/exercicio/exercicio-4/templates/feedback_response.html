@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Resposta de Feedback</title>
+</head>
+<body>
+    <h1>Resposta de Feedback</h1>
+    <p><strong>Feedback:</strong> {{ feedback }}</p>
+    <p><strong>Resposta:</strong> {{ response }}</p>
+    <a href="{{ url_for('product_page', product_id=product_id) }}">Voltar ao produto</a>
+</body>
+</html>

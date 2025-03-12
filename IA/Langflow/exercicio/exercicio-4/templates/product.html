@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ product.name }}</title>
+</head>
+<body>
+    <h1>{{ product.name }}</h1>
+    <p>{{ product.description }}</p>
+    <form action="{{ url_for('submit_feedback', product_id=product_id) }}" method="post">
+        <label for="feedback_comment">Seu Feedback:</label>
+        <textarea name="feedback_comment" id="feedback_comment" required></textarea>
+        <button type="submit">Enviar Feedback</button>
+    </form>
+</body>
+</html>
