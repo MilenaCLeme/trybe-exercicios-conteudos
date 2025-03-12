@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes do Usuário</title>
+    <style>
+        /* Geral */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f2f2f2;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        .title {
+            text-align: center;
+            color: #2E8B57; /* Cor verde, transmitindo saúde e energia */
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+        }
+        .info {
+            margin-bottom: 15px;
+            color: #555;
+            font-size: 1.2rem;
+        }
+        .message {
+            background-color: #e0ffe0;
+            color: #2E8B57;
+            border-left: 5px solid #2E8B57;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+        .button {
+            background-color: #2E8B57;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .button:hover {
+            background-color: #228B22;
+        }
+        /* Responsividade */
+        @media (max-width: 600px) {
+            .title {
+                font-size: 2rem;
+            }
+            .info {
+                font-size: 1rem;
+            }
+            .button {
+                font-size: 1rem;
+                padding: 8px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1 class="title">{{ user['nome'] }}</h1>
+    <div class="info">Fotos enviadas: {{ user['fotos_enviadas_para_campanha_de_engajamento'] }}</div>
+    <div class="info">Em campanha de engajamento: {{ 'Sim' if user['em_campanha_engajamento'] else 'Não' }}</div>
+    <div class="info">Presença nos treinos nos últimos três meses: {{ user['presenca_nos_treinos_tres_meses'] }}</div>
+    <div class="info">Desconto recebido: {{ user['desconto_recebido'] }}</div>
+    {% if message %}
+    <div class="message"><strong>{{ message }}</strong></div>
+    {% endif %}
+    <form method="POST">
+        <button type="submit" class="button">Simular Interação com a IA</button>
+    </form>
+    <form action="{{ url_for('index') }}">
+        <button type="submit" class="button">Voltar</button>
+    </form>
+</body>
+</html>
