@@ -1,0 +1,11 @@
+# Criando uma Conta no Hugging Face 
+
+- Crie uma conta - https://huggingface.co/ 
+
+- Acesse o https://huggingface.co/new-space para comecar 
+
+- Já tem integração da sua maquina 
+
+- selecione gradio é coloque um repositorio vazio 
+
+- access tokens quanto acesso de 
